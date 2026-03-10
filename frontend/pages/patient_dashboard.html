@@ -1,8 +1,12 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Patient Dashboard - MedicPulse</title>
 
 <link rel="stylesheet" href="../css/style.css">
@@ -18,7 +22,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 
 <!-- Sidebar -->
 
-<div class="sidebar">
+<aside class="sidebar">
 
 <div class="sidebar-header">
 <h2>MedicPulse</h2>
@@ -63,7 +67,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 
 </ul>
 
-</div>
+</aside>
 
 
 <!-- Main Wrapper -->
@@ -80,13 +84,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 
 <div class="nav-right">
 
-<div class="user-profile">
-<span class="user-name">Patient</span>
+
+
 
 <div class="notification-icon">
+    <span class="user-name">Patient</span>
 <i class="fas fa-bell"></i>
+
 </div>
-</div>
+
 
 <a href="login.html" class="logout-btn">Logout</a>
 
@@ -99,68 +105,86 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 
 <main class="content-area">
 
-<!-- Welcome Section -->
+<section class="page-header">
 
-<div class="page-header">
-<h1>Welcome, Patient!</h1>
-<p>Here is an overview of your health activities.</p>
-</div>
+<h1>Welcome, Patient 👋</h1>
+
+<p>
+Here is an overview of your health activities.
+</p>
+
+</section>
 
 
 <!-- Quick Actions -->
 
-<div class="quick-actions">
+<section class="quick-actions">
 
 <h2>Quick Actions</h2>
 
 <div class="quick-action-cards">
 
 <div class="action-card">
+
 <i class="fas fa-calendar-plus"></i>
+
 <h3>Book Appointment</h3>
+
 <p>Schedule a consultation with a doctor</p>
+
 <a href="appointment.html" class="action-btn">Book Now</a>
+
 </div>
 
 <div class="action-card">
+
 <i class="fas fa-history"></i>
+
 <h3>Visit History</h3>
+
 <p>Check your previous hospital visits</p>
+
 <a href="visit_history.html" class="action-btn">View History</a>
+
 </div>
 
 <div class="action-card">
+
 <i class="fas fa-calendar-check"></i>
+
 <h3>My Appointments</h3>
+
 <p>See your upcoming appointments</p>
-<a href="#" class="action-btn">View</a>
-</div>
+
+<a href="my_appointments.html" class="action-btn">View</a>
 
 </div>
 
 </div>
+
+</section>
 
 
 <!-- Appointment Overview -->
 
-<div class="stats-container">
+<section class="stats-container">
 
 <div class="card stat-card">
 
 <div class="stat-icon">
-<i class="fas fa-calendar-day"></i>
+<i class="fas fa-user-doctor"></i>
 </div>
 
 <div class="stat-info">
 
-<h3>Upcoming Appointment</h3>
+<h3>Next Appointment</h3>
 
 <p class="stat-value">
-12 March, 10:30 AM
+12 March 2026 | 10:30 AM
 </p>
 
-<p style="font-size:0.8rem;color:var(--text-muted);">
-Dr. Rao - Cardiology
+<p class="stat-subtext">
+Dr. Rao – Cardiology
 </p>
 
 </div>
@@ -182,7 +206,7 @@ Dr. Rao - Cardiology
 15 Visits
 </p>
 
-<p style="font-size:0.8rem;color:var(--text-muted);">
+<p class="stat-subtext">
 Last visit: 02 Feb 2024
 </p>
 
@@ -205,7 +229,7 @@ Last visit: 02 Feb 2024
 2 New
 </p>
 
-<p style="font-size:0.8rem;color:var(--text-muted);">
+<p class="stat-subtext">
 View all updates
 </p>
 
@@ -213,16 +237,14 @@ View all updates
 
 </div>
 
-</div>
+</section>
 
 
 <!-- Health Summary -->
 
-<div class="card">
+<section class="card">
 
-<h3 style="margin-bottom:20px;">
-Health Summary
-</h3>
+<h3>Health Summary</h3>
 
 <p>
 Recent reports and upcoming checkups are listed here.
@@ -235,7 +257,7 @@ Patient Health Progress Chart Placeholder
 
 </div>
 
-</div>
+</section>
 
 </main>
 
@@ -243,7 +265,6 @@ Patient Health Progress Chart Placeholder
 
 </div>
 
-<script src="../js/script.js"></script>
-
 </body>
+
 </html>
