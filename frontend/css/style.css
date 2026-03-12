@@ -812,6 +812,8 @@ section {
     margin-left: var(--sidebar-width);
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    /* Fix flex-item from overflowing viewport when table expands */
 }
 
 .main-wrapper .navbar {
@@ -826,6 +828,22 @@ section {
     top: 0;
     z-index: 90;
     box-shadow: none;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 15px;
+    display: none;
+    padding: 0;
 }
 
 .nav-left .system-name {
@@ -923,36 +941,148 @@ section {
     font-weight: 700;
 }
 
+/* --- Modern Auth Pages (Login & Register) --- */
 .login-page {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary-light);
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+    padding: 40px 20px;
+    font-family: 'Poppins', sans-serif;
 }
 
-.login-card {
+.auth-container {
     width: 100%;
-    max-width: 450px;
+    max-width: 1000px;
+    display: flex;
     background: var(--bg-white);
-    border-radius: var(--border-radius);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 50, 100, 0.08);
     overflow: hidden;
-    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 1;
 }
 
-.login-header {
-    background-color: var(--primary-color);
+/* Left Side - Image & Branding */
+.auth-banner {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
-    padding: 30px;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=800') center/cover;
+    opacity: 0.15;
+    z-index: 0;
+}
+
+.auth-banner-content {
+    position: relative;
+    z-index: 1;
+}
+
+.auth-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.auth-banner h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 15px;
+}
+
+.auth-banner p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+/* Right Side - Form */
+.login-card {
+    flex: 1;
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bg-white);
+    max-width: none !important;
+    /* Override inline styles */
+    margin: 0 !important;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.auth-header-mobile {
+    display: none;
     text-align: center;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 102, 204, 0.15);
+}
+
+.auth-header-mobile h2 {
+    color: white;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.auth-header-mobile p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
 }
 
 .login-form-area {
-    padding: 40px;
+    padding: 0;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-title {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 30px;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    position: relative;
 }
 
 .input-group label {
@@ -960,49 +1090,164 @@ section {
     margin-bottom: 8px;
     font-weight: 500;
     font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.input-icon-wrapper {
+    position: relative;
+}
+
+.input-icon-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    transition: var(--transition);
+    pointer-events: none;
 }
 
 .input-group input,
 .input-group select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 14px 15px 14px 45px;
+    /* Space for icon */
+    border: 2px solid #edf2f7;
+    border-radius: 12px;
+    background: #f8fafc;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
     outline: none;
-    transition: 0.2s;
 }
 
-.input-group input:focus {
-    border-color: var(--primary-color);
+.input-group input:focus,
+.input-group select:focus {
+    border-color: var(--primary);
+    background: var(--bg-white);
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+.input-group input:focus+i {
+    color: var(--primary);
+}
+
+.input-icon-wrapper .password-toggle {
+    position: absolute;
+    right: 15px;
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    cursor: pointer;
+    transition: var(--transition);
+    pointer-events: auto;
+}
+
+.input-icon-wrapper .password-toggle:hover {
+    color: var(--text-dark);
 }
 
 .login-btn {
     width: 100%;
-    padding: 12px;
-    background-color: var(--primary-color);
+    padding: 14px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    transition: 0.2s;
-    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .login-btn:hover {
-    background-color: #1565C0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 102, 204, 0.25);
 }
 
 .register-link {
     text-align: center;
-    margin-top: 20px;
-    font-size: 0.9rem;
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: var(--text-gray);
 }
 
 .register-link a {
-    color: var(--primary-color);
+    color: var(--primary);
     text-decoration: none;
     font-weight: 600;
+    transition: var(--transition);
+}
+
+.register-link a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.back-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+    margin-bottom: 20px;
+}
+
+.back-home:hover {
+    color: var(--text-dark);
+    transform: translateX(-3px);
+}
+
+/* Two column layout for registration if needed */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Auth Responsive */
+@media (max-width: 900px) {
+    .auth-banner {
+        display: none;
+        /* Hide image banner on smaller screens */
+    }
+
+    .auth-container {
+        max-width: 500px;
+    }
+
+    .auth-header-mobile {
+        display: block;
+        /* Show branding above form on mobile */
+    }
+
+    .login-card {
+        padding: 40px 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 20px 15px;
+    }
+
+    .login-card {
+        padding: 30px 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
 
 .booking-form {
@@ -1069,15 +1314,46 @@ td {
     margin-top: 15px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .sidebar {
         transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
     }
 
     .main-wrapper {
         margin-left: 0;
     }
+
+    #mobile-sidebar-toggle {
+        display: block !important;
+    }
+
+    /* Fix navbar overlap on mobile/tablet */
+    .main-wrapper .navbar {
+        padding: 0 15px;
+        /* Reduce side padding */
+    }
+
+    .nav-left .system-name {
+        font-size: 1.1rem;
+        /* Slightly smaller font */
+    }
+
+    .user-name {
+        display: none;
+        /* Hide username text to save space, just keep icon/logout */
+    }
+
+    .notification-icon {
+        margin-right: 15px;
+    }
 }
+
 /* Doctors Listing Page Specific */
 .page-banner {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -1085,17 +1361,20 @@ td {
     padding: 80px 0;
     text-align: center;
 }
+
 .page-banner h1 {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 10px;
 }
+
 .page-banner p {
     font-size: 1.1rem;
     opacity: 0.9;
     max-width: 600px;
     margin: 0 auto;
 }
+
 .search-filter-section {
     background: var(--bg-white);
     padding: 30px;
@@ -1106,16 +1385,19 @@ td {
     z-index: 10;
     max-width: 1000px;
 }
+
 .search-form {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr auto;
     gap: 15px;
     align-items: end;
 }
+
 .search-group {
     display: flex;
     flex-direction: column;
 }
+
 .search-group label {
     font-size: 0.85rem;
     font-weight: 500;
@@ -1124,6 +1406,7 @@ td {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
+
 .search-input {
     width: 100%;
     padding: 12px 15px;
@@ -1134,23 +1417,38 @@ td {
     transition: var(--transition);
     outline: none;
 }
+
 .search-input:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
 }
+
 .search-btn {
     height: 46px;
     padding: 0 25px;
 }
+
 /* Responsive Search */
 @media (max-width: 992px) {
-    .search-form { grid-template-columns: 1fr 1fr; }
-    .search-group:first-child { grid-column: 1 / -1; }
+    .search-form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .search-group:first-child {
+        grid-column: 1 / -1;
+    }
 }
+
 @media (max-width: 576px) {
-    .search-form { grid-template-columns: 1fr; }
-    .search-btn { width: 100%; }
+    .search-form {
+        grid-template-columns: 1fr;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
 }
+
 /* Grid Layout Overrides for Doctors */
 .doctors-page-grid {
     display: grid;
@@ -1158,14 +1456,23 @@ td {
     gap: 30px;
     margin-bottom: 50px;
 }
+
 @media (max-width: 1200px) {
-    .doctors-page-grid { grid-template-columns: repeat(3, 1fr); }
+    .doctors-page-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
+
 @media (max-width: 992px) {
-    .doctors-page-grid { grid-template-columns: repeat(2, 1fr); }
+    .doctors-page-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
+
 @media (max-width: 576px) {
-    .doctors-page-grid { grid-template-columns: 1fr; }
+    .doctors-page-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 
@@ -1182,16 +1489,19 @@ td {
     display: flex;
     flex-direction: column;
 }
+
 .interactive-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-hover);
 }
+
 .card-image-wrapper {
     position: relative;
     width: 100%;
     height: 260px;
     overflow: hidden;
 }
+
 .doctor-card.interactive-card img,
 .card-image-wrapper img {
     width: 100%;
@@ -1199,9 +1509,11 @@ td {
     object-fit: cover;
     transition: transform 0.5s ease;
 }
+
 .interactive-card:hover .card-image-wrapper img {
     transform: scale(1.08);
 }
+
 .card-overlay {
     position: absolute;
     top: 0;
@@ -1217,13 +1529,16 @@ td {
     opacity: 0;
     transition: opacity 0.4s ease;
 }
+
 .interactive-card:hover .card-overlay {
     opacity: 1;
 }
+
 .overlay-meta {
     width: 100%;
     margin-bottom: 20px;
 }
+
 .overlay-meta li {
     color: #ffffff;
     font-size: 0.9rem;
@@ -1235,33 +1550,51 @@ td {
     opacity: 0;
     transition: transform 0.4s ease, opacity 0.4s ease;
 }
+
 .overlay-meta li i {
     width: 16px;
     text-align: center;
     color: var(--primary-light);
 }
+
 .overlay-meta li.availability i {
     color: #f6ad55;
 }
+
 .interactive-card:hover .overlay-meta li {
     transform: translateY(0);
     opacity: 1;
 }
-.interactive-card:hover .overlay-meta li:nth-child(1) { transition-delay: 0.05s; }
-.interactive-card:hover .overlay-meta li:nth-child(2) { transition-delay: 0.1s; }
-.interactive-card:hover .overlay-meta li:nth-child(3) { transition-delay: 0.15s; }
-.interactive-card:hover .overlay-meta li:nth-child(4) { transition-delay: 0.2s; }
+
+.interactive-card:hover .overlay-meta li:nth-child(1) {
+    transition-delay: 0.05s;
+}
+
+.interactive-card:hover .overlay-meta li:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.interactive-card:hover .overlay-meta li:nth-child(3) {
+    transition-delay: 0.15s;
+}
+
+.interactive-card:hover .overlay-meta li:nth-child(4) {
+    transition-delay: 0.2s;
+}
+
 .overlay-btn {
     transform: translateY(15px);
     opacity: 0;
     transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.3s ease;
     transition-delay: 0s;
 }
+
 .interactive-card:hover .overlay-btn {
     transform: translateY(0);
     opacity: 1;
     transition-delay: 0.25s;
 }
+
 .doctor-card.interactive-card .doctor-info {
     padding: 20px;
     text-align: center;
@@ -1270,4 +1603,3 @@ td {
     flex-direction: column;
     justify-content: center;
 }
-

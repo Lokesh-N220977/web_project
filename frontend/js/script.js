@@ -5,6 +5,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log("Current page:", page);
 
+    // --- GLOBAL API & AUTH UTILITES ---
+    const API_BASE_URL = 'http://127.0.0.1:8000/api';
+
+    const setToken = (token) => {
+        localStorage.setItem('auth_token', token);
+    };
+
+    const getToken = () => {
+        return localStorage.getItem('auth_token');
+    };
+
+    const clearAuth = () => {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_role');
+    };
+
+    // Helper wrapper for making authorized fetch requests
+    const authFetch = async (url, options = {}) => {
+        const token = getToken();
+        if (!options.headers) options.headers = {};
+        options.headers['Content-Type'] = 'application/json';
+        if (token) {
+            options.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return fetch(url, options);
+    };
+
+    // Dashboard auth protection
+    const isDashboardPage = path.includes('/admin/') || path.includes('dashboard') || path.includes('profile') || path.includes('appointment');
+    if (isDashboardPage && page !== 'login.html' && page !== 'register.html' && !getToken()) {
+        console.warn("Unauthorized! Redirecting to login...");
+        window.location.href = path.includes('/admin/') || path.includes('/doctor/') ? '../../pages/login.html' : 'login.html';
+        return;
+    }
+    // --- END AUTH UTILS ---
+
     // Sidebar menu items based on dashboard type
     const patientMenu = [
         { name: 'Dashboard', icon: 'fas fa-home', link: 'patient_dashboard.html' },
@@ -15,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const adminMenu = [
-        { name: 'Dashboard', icon: 'fas fa-chart-line', link: 'admin_dashboard.html' },
+        { name: 'Dashboard', icon: 'fas fa-chart-line', link: 'dashboard.html' },
         { name: 'Manage Patients', icon: 'fas fa-users', link: '#' },
         { name: 'Manage Doctors', icon: 'fas fa-user-md', link: '#' },
         { name: 'Appointments', icon: 'fas fa-calendar-alt', link: '#' },
@@ -32,12 +68,25 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             menuItems = patientMenu;
         }
+        const isSubdir = path.includes('/admin/');
 
         menuItems.forEach(item => {
             const li = document.createElement('li');
             const a = document.createElement('a');
-            a.href = item.link;
-            if (page === item.link) a.classList.add('active');
+
+            // Adjust path based on current directory level
+            let finalLink = item.link;
+            if (isSubdir && finalLink !== '#') {
+                if (finalLink.startsWith('admin/')) {
+                    finalLink = finalLink.replace('admin/', '');
+                } else {
+                    finalLink = '../' + finalLink;
+                }
+            }
+            a.href = finalLink;
+
+            if (path.includes(finalLink) && finalLink !== '#') a.classList.add('active');
+            if (page === 'dashboard.html' && finalLink === 'dashboard.html' && isSubdir) a.classList.add('active');
 
             a.innerHTML = `<i class="${item.icon}"></i> <span>${item.name}</span>`;
             li.appendChild(a);
@@ -45,14 +94,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Mobile Sidebar Toggle
+    const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    if (mobileSidebarToggle && sidebar) {
+        mobileSidebarToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside of it on mobile/tablet
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== mobileSidebarToggle) {
+                sidebar.classList.remove('active');
+            }
+        });
+    }
+
     // Handle Login Simulation
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
+        const roleSelect = document.getElementById('role');
+        const registerLink = document.querySelector('.register-link');
+
+        // Initial check on load
+        if (roleSelect && registerLink && roleSelect.value === 'admin') {
+            registerLink.style.display = 'none';
+        }
+
+        if (roleSelect && registerLink) {
+            roleSelect.addEventListener('change', (e) => {
+                if (e.target.value === 'admin') {
+                    registerLink.style.display = 'none';
+                } else {
+                    registerLink.style.display = 'block';
+                }
+            });
+        }
+
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const role = document.getElementById('role').value;
             if (role === 'admin') {
-                window.location.href = 'admin_dashboard.html';
+                window.location.href = 'admin/dashboard.html';
+            } else if (role === 'doctor') {
+                window.location.href = 'doctor/dashboard.html';
             } else {
                 window.location.href = 'patient_dashboard.html';
             }
@@ -113,25 +199,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Prepared Data:', appointmentData);
 
                 // Send POST request
-                fetch('/api/appointments/book', {
+                btn = this.querySelector('button[type="submit"]');
+                const origText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                btn.disabled = true;
+
+                // For Pydantic schema mapping, frontend "doctor" needs to be named "doctor_id"
+                const payload = {
+                    department: appointmentData.department,
+                    doctor_id: appointmentData.doctor,
+                    appointment_date: appointmentData.date,
+                    appointment_time: appointmentData.time
+                };
+
+                authFetch(`${API_BASE_URL}/appointments`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(appointmentData)
+                    body: JSON.stringify(payload)
                 })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Success:', data);
-                        alert('Appointment booked successfully!');
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                        alert('Failed to book appointment.');
-                    });
+                .then(response => {
+                    if (!response.ok) throw new Error('Booking failed');
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Appointment booked successfully!');
+                    window.location.href = 'my_appointments.html';
+                })
+                .catch(err => {
+                    console.error('Booking error:', err);
+                    alert("Failed to book appointment.");
+                    btn.innerHTML = origText;
+                    btn.disabled = false;
+                });
             });
         }
     }
@@ -165,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const fetchAppointments = () => {
-                fetch('/api/appointments/user')
+                authFetch(`${API_BASE_URL}/my-appointments`)
                     .then(response => {
                         if (!response.ok) throw new Error('Network response was not ok');
                         return response.json();
@@ -289,34 +387,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Fetch User Data
         const fetchProfile = () => {
-            /* 
             // Real fetch request
-            fetch('/api/user/profile')
+            authFetch(`${API_BASE_URL}/profile`)
                 .then(response => {
                     if (!response.ok) throw new Error('Failed to load profile');
                     return response.json();
                 })
-                .then(data => populateForm(data))
+                .then(data => {
+                    // Map backend keys to frontend form mappings
+                    const profileMap = {
+                        fullName: data.name,
+                        email: data.email,
+                        phone: data.phone,
+                        dob: data.dob,
+                        gender: data.gender,
+                        bloodGroup: data.blood_group,
+                        emergencyContact: data.emergency_contact,
+                        address: data.address,
+                        id: data._id // Add _id display
+                    };
+                    originalProfileData = profileMap;
+                    populateForm(profileMap);
+                    disableInputs(); // Default to View Mode
+                })
                 .catch(error => console.error('Error fetching profile:', error));
-            */
-
-            // Dummy API Response for verification
-            setTimeout(() => {
-                const dummyProfile = {
-                    id: 'PT-89420',
-                    fullName: 'John Doe',
-                    email: 'john.doe@example.com',
-                    phone: '+1 415 555 2671',
-                    dob: '1985-06-15',
-                    gender: 'Male',
-                    bloodGroup: 'O+',
-                    emergencyContact: 'Jane Doe (+1 415 555 9812)',
-                    address: '123 Health Ave, Wellness City, CA 94102'
-                };
-                originalProfileData = dummyProfile;
-                populateForm(dummyProfile);
-                disableInputs(); // Default to View Mode
-            }, 500);
         };
 
         fetchProfile();
@@ -346,16 +440,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log('Sending Updated Profile Data:', updatedData);
 
-                // Update UI visually right away
-                if (sidebarName) sidebarName.textContent = updatedData.fullName;
-                if (navUserName) navUserName.textContent = updatedData.fullName;
+                // Re-key dictionary mappings for python pydantic
+                const pythonPayload = {
+                    name: updatedData.fullName,
+                    email: updatedData.email,
+                    phone: updatedData.phone,
+                    dob: updatedData.dob,
+                    gender: updatedData.gender,
+                    blood_group: updatedData.bloodGroup,
+                    emergency_contact: updatedData.emergencyContact,
+                    address: updatedData.address
+                };
 
-                /*
                 // Real PUT Request
-                fetch('/api/user/profile', {
+                authFetch(`${API_BASE_URL}/profile`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(updatedData)
+                    body: JSON.stringify(pythonPayload)
                 })
                 .then(response => {
                     if (!response.ok) throw new Error('Update failed');
@@ -364,28 +464,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(data => {
                     profileNotification.textContent = 'Profile updated successfully.';
                     profileNotification.className = 'notification success';
+                    
+                    if (sidebarName) sidebarName.textContent = updatedData.fullName;
+                    if (navUserName) navUserName.textContent = updatedData.fullName;
+
+                    originalProfileData = updatedData;
+                    disableInputs(); // Return to view mode automatically
+
                     setTimeout(() => { profileNotification.className = 'notification'; }, 4000);
                 })
                 .catch(error => {
                     profileNotification.textContent = 'Failed to update profile. Please try again.';
                     profileNotification.className = 'notification error';
+                    disableInputs();
                     setTimeout(() => { profileNotification.className = 'notification'; }, 4000);
                 });
-                */
-
-                // Simulated API Response
-                setTimeout(() => {
-                    profileNotification.textContent = 'Profile updated successfully.';
-                    profileNotification.className = 'notification success';
-
-                    originalProfileData = updatedData;
-                    disableInputs(); // Return to view mode automatically
-
-                    // Auto hide notification after 4 seconds
-                    setTimeout(() => {
-                        profileNotification.className = 'notification';
-                    }, 4000);
-                }, 800);
             });
         }
     }
