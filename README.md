@@ -1,55 +1,225 @@
 # MedicPulse Hospital Appointment Management System
 
-A professional, modern, and minimal medical dashboard interface built with HTML and CSS.
+MedicPulse is a hospital appointment management platform designed to streamline interactions between patients, doctors, and administrators.
 
-## Features
-- **Login Page**: Role-based access simulation (Patient/Admin).
-- **Patient Dashboard**: Overview of upcoming appointments and medical notifications.
-- **Admin Dashboard**: Real-time hospital statistics and activity tracking.
-- **Appointment Booking**: Clean form for scheduling visits with time slot selection.
-- **Visit History**: Tabular view of past medical records.
-- **Analytics**: Data visualization placeholders for hospital performance.
+The system allows appointment booking, doctor schedule management, consultation tracking, and hospital analytics through a role-based dashboard system.
 
-## Design System
-- **Primary Color**: #1E88E5 (Professional Blue)
-- **Background**: #FFFFFF / #E3F2FD (Clean & Light)
-- **Typography**: Poppins (Modern Sans-Serif)
-- **Components**: Rounded corners, soft shadows, and responsive sidebar navigation.
+The project uses **React + TypeScript for the frontend**, **FastAPI for the backend**, and **MongoDB as the database**.
+
+---
+
+## System Portals
+
+### Patient Portal
+
+Patients can manage their appointments and personal records.
+
+Features:
+- Patient dashboard
+- Book doctor appointments
+- View upcoming appointments
+- Visit history
+- Profile management
+- Notifications
+
+---
+
+### Doctor Portal
+
+Doctors can manage consultations and patient records.
+
+Features:
+- Doctor dashboard
+- Daily schedule
+- Patient list
+- Consultation notes
+- Prescription interface
+- Availability management
+
+---
+
+### Admin Portal
+
+Administrators manage the hospital system.
+
+Features:
+- Admin dashboard
+- Doctor management
+- Patient management
+- Appointment management
+- Doctor schedule configuration
+- Hospital analytics
+
+---
+
+## Technology Stack
+
+### Frontend
+- React
+- TypeScript
+- React Router
+- Modern CSS UI components
+
+### Backend
+- FastAPI
+- Python
+- JWT Authentication
+- REST API Architecture
+
+### Database
+- MongoDB
+
+---
 
 ## Project Structure
-```
+
 hospital_project
 │
 ├── frontend
-│   ├── css
-│   ├── js
-│   ├── components
-│   └── pages
+│ └── src
+│ ├── components
+│ ├── pages
+│ │ ├── public
+│ │ ├── patient
+│ │ ├── doctor
+│ │ └── admin
+│ ├── services
+│ ├── styles
+│ └── App.tsx
 │
 ├── backend
-│   ├── app.py           # Application Entry points
-│   ├── config/          # Configurations
-│   ├── routes/          # API Blueprints
-│   ├── models/          # Schema definitions
-│   └── utils/           # Shared helpers
+│ └── app
+│ ├── main.py
+│ ├── routes
+│ │ ├── auth.py
+│ │ ├── doctors.py
+│ │ ├── patients.py
+│ │ └── appointments.py
+│ ├── models
+│ ├── services
+│ └── utils
 │
 ├── database
-│   └── db.py            # MongoDB connection
+│ └── mongodb.py
 │
 ├── README.md
-└── .gitignore
-```
+└── requirements.txt
+
+---
+
+## System Architecture
+
+Frontend (React + TypeScript)
+│
+│ REST API
+▼
+Backend (FastAPI)
+│
+│ Database Queries
+▼
+MongoDB Database
+
+---
 
 ## Backend API Endpoints
-- **Status**: `GET /`
-- **Auth**: `/api/auth/login`, `/api/auth/register`
-- **Patients**: `GET /api/patients`, `POST /api/patients`
-- **Doctors**: `GET /api/doctors`
-- **Appointments**: `POST /api/appointments`, `GET /api/appointments`
 
-## How to Run
-1. **Frontend**: Simply open `index.html` in your web browser.
-2. **Backend**: 
-   - Ensure Python 3.x is installed.
-   - Install dependencies: `pip install flask flask-cors pymongo`
-   - Run: `python backend/app.py`
+### Authentication
+
+POST /api/auth/register
+POST /api/auth/login
+
+
+### Patients
+
+
+GET /api/patients
+GET /api/patients/{id}
+POST /api/patients
+
+
+### Doctors
+
+
+GET /api/doctors
+GET /api/doctors/{id}
+
+
+### Appointments
+
+
+POST /api/appointments
+GET /api/appointments
+
+
+### Doctor Slots
+
+
+POST /api/doctor-slots
+GET /api/doctor-slots
+
+
+---
+
+## Appointment Booking Logic
+
+The system uses a slot-based appointment system.
+
+1. Doctors define available time slots.
+2. Patients select available slots.
+3. The system prevents duplicate bookings.
+4. Once booked, the slot becomes unavailable.
+
+---
+
+## How to Run the Project
+
+### Backend Setup
+
+Install dependencies
+
+
+pip install fastapi uvicorn pymongo python-jose passlib
+
+Run backend server
+uvicorn app.main:app --reload
+
+Backend runs at
+http://127.0.0.1:8000
+
+
+---
+
+### Frontend Setup
+
+Go to frontend folder
+cd frontend
+
+Install dependencies
+npm install
+
+Start frontend server
+npm run dev
+
+Frontend runs at
+http://localhost:5173
+
+---
+
+## Future Enhancements
+
+- Smart appointment prioritization
+- Doctor workload analytics
+- PDF prescription generation
+- Real-time notifications
+- Telemedicine integration
+
+---
+
+## Contributors
+  
+Deepti Sree — Landing Pages  
+Revathi — Patient Portal  
+Chilakamma — Appointment UI  
+Mounika — Doctor Portal  
+Sathish — Admin Portal
+Lokeshwar Reddy — Backend and System Architecture
