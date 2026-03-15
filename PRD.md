@@ -23,7 +23,8 @@ The primary objectives of the system are:
 - Allow administrators to manage doctors and monitor system activity
 - Improve appointment scheduling efficiency
 - Provide analytics dashboards for hospital insights
-
+- Enable scalable frontend architecture using React for dynamic functionality
+- Support API-driven communication between frontend and backend systems
 ---
 
 ## 4. User Roles
@@ -104,27 +105,36 @@ The system supports three main user roles:
 ## 7. Technologies Used
 
 ### Frontend
-- HTML
-- CSS
-- JavaScript
+- React.js
+- TypeScript
 
 ### Backend
 - Python
 - Flask
+Handles:
+  - Authentication
+  - API services
+  - Appointment management logic
+  - Data processing
 
 ### Database
 - MongoDB
+Stores:
+  - Patient records
+  - Doctor profiles
+  - Appointment details
+  - Visit history
 
-### Visualization
-- Chart.js (for dashboards and analytics charts)
 
 ---
 
 ## 8. System Architecture Overview
 
 1. **Frontend Layer**
-   - User interface built with HTML, CSS, and JavaScript.
-   - Handles patient, doctor, and admin interactions.
+  Implemented using React.js, which provides:
+  - Component-based UI
+  - Dynamic page rendering
+  - API integration with backend services
 
 2. **Backend Layer**
    - Flask server processes requests.
@@ -160,69 +170,23 @@ This project demonstrates the practical application of web technologies for real
 
 # 11. Repository Structure
 
-├── backend
-│   ├── app.py
-│   ├── config
-│   │   ├── config.py
-│   │   ├── __init__.py
-│   │   └── __pycache__
-│   │       ├── config.cpython-310.pyc
-│   │       └── __init__.cpython-310.pyc
-│   ├── __init__.py
-│   ├── models
-│   │   ├── appointment_model.py
-│   │   ├── doctor_model.py
-│   │   ├── __init__.py
-│   │   ├── patient_model.py
-│   │   └── __pycache__
-│   │       ├── doctor_model.cpython-310.pyc
-│   │       └── __init__.cpython-310.pyc
-│   ├── __pycache__
-│   │   └── __init__.cpython-310.pyc
-│   ├── routes
-│   │   ├── appointment_routes.py
-│   │   ├── auth_routes.py
-│   │   ├── doctor_routes.py
-│   │   ├── __init__.py
-│   │   ├── patient_routes.py
-│   │   └── __pycache__
-│   │       ├── appointment_routes.cpython-310.pyc
-│   │       ├── auth_routes.cpython-310.pyc
-│   │       ├── doctor_routes.cpython-310.pyc
-│   │       ├── __init__.cpython-310.pyc
-│   │       └── patient_routes.cpython-310.pyc
-│   └── utils
-│       ├── helpers.py
-│       ├── __init__.py
-│       └── __pycache__
-│           ├── helpers.cpython-310.pyc
-│           └── __init__.cpython-310.pyc
-├── database
-│   ├── db.py
-│   └── __pycache__
-│       └── db.cpython-310.pyc
+hospital_project
+│
 ├── frontend
-│   ├── components
-│   │   ├── navbar.html
-│   │   └── sidebar.html
 │   ├── css
-│   │   └── style.css
-│   ├── images
-│   │   └── appointment-banner.jpg
 │   ├── js
-│   │   ├── main.js
-│   │   └── script.js
+│   ├── components
 │   └── pages
-│       ├── admin_dashboard.html
-│       ├── analytics.html
-│       ├── appointment.html
-│       ├── doctors.html
-│       ├── login.html
-│       ├── my_appointments.html
-│       ├── patient_dashboard.html
-│       ├── profile.html
-│       ├── register.html
-│       └── visit_history.html
-├── index.html
-├── PRD.md
-└── README.md
+│
+├── backend
+│   ├── app.py           # Application Entry points
+│   ├── config/          # Configurations
+│   ├── routes/          # API Blueprints
+│   ├── models/          # Schema definitions
+│   └── utils/           # Shared helpers
+│
+├── database
+│   └── db.py            # MongoDB connection
+│
+├── README.md
+└── .gitignore
