@@ -1,106 +1,225 @@
-# MedicPulse - Advanced Hospital Management System
+# MedicPulse Hospital Appointment Management System
 
-MedicPulse is a full-stack, state-of-the-art healthcare platform designed with a focus on premium aesthetics, dynamic data visualization, and robust role-based management.
+MedicPulse is a hospital appointment management platform designed to streamline interactions between patients, doctors, and administrators.
 
-## 🌟 Key Features
+The system allows appointment booking, doctor schedule management, consultation tracking, and hospital analytics through a role-based dashboard system.
 
-- **Role-Based Portals**: Tailored experiences for Patients, Doctors, and System Administrators.
-- **Dynamic Analytics**: Live charting of revenue, patient demographics, and departmental load using Recharts.
-- **Smart Scheduling**: Conflict-preventing appointment booking system with real-time slot availability.
-- **Responsive Design**: Fully optimized for Desktop, Tablet, and Mobile devices with modern glassmorphism and micro-animations.
-- **Secure Medical Records**: Structured visit history, prescriptions, and encrypted patient data management.
+The project uses **React + TypeScript for the frontend**, **FastAPI for the backend**, and **MongoDB as the database**.
 
 ---
 
-## 🏗️ Project Architecture
+## System Portals
 
-The project is divided into two main sections: a modern React frontend and a robust FastAPI backend.
+### Patient Portal
 
-### 🎨 Frontend (`/frontend`)
-Built with **React 18 + TypeScript + Vite** for maximum performance and type safety.
+Patients can manage their appointments and personal records.
 
-- **`src/pages/`**: Organized by user role (Admin, Doctor, Patient, Public).
-- **`src/components/layout/`**: Modular layout engine using sidebars and navbars specific to each role.
-- **`src/styles/`**: Comprehensive design system with CSS variables, modular stylesheets, and utility classes.
-- **`src/services/`**: API abstraction layer for clean communication with the backend.
-
-### ⚙️ Backend (`/backend`)
-A high-performance asynchronous API built with **FastAPI (Python)**.
-
-- **`app/routes/`**: Domain-specific API endpoints (Users, Doctors, Appointments, Analytics, etc.).
-- **`app/models/`**: Data schemas and persistence logic.
-- **`app/services/`**: Business logic layer decoupled from API routing.
-- **`app/core/`**: Security (JWT), configuration, and global exceptions.
+Features:
+- Patient dashboard
+- Book doctor appointments
+- View upcoming appointments
+- Visit history
+- Profile management
+- Notifications
 
 ---
 
-## 🛠️ Technology Stack
+### Doctor Portal
 
-| Layer | Technologies |
-| :--- | :--- |
-| **Frontend** | React, TypeScript, Vite, Recharts, Lucide Icons, FontAwesome |
-| **Backend** | Python, FastAPI, Pydantic, JWT Authentication |
-| **Database** | *Configurable (SQLAlchemy/MongoDB Ready)* |
-| **Aesthetics** | Vanilla CSS (Flexbox/Grid), Glassmorphism, Micro-animations |
+Doctors can manage consultations and patient records.
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v16+)
-- Python (v3.9+)
-
-### Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd medicpulse
-   ```
-
-2. **Frontend Setup**:
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-
-3. **Backend Setup**:
-   ```bash
-   cd backend
-   # Recommend creating a virtual environment
-   pip install -r requirements.txt
-   uvicorn main:app --reload
-   ```
+Features:
+- Doctor dashboard
+- Daily schedule
+- Patient list
+- Consultation notes
+- Prescription interface
+- Availability management
 
 ---
 
-## 📁 Detailed Directory Structure
+### Admin Portal
 
-```
-MedicPulse/
-├── frontend/                 # React Application
-│   ├── src/
-│   │   ├── components/       # Layouts & Reusable UI
-│   │   ├── pages/            # Role-based views (Admin/Doctor/Patient)
-│   │   ├── styles/           # Modern CSS Design System
-│   │   └── services/         # API Layer
-│   └── vite.config.ts        # Build Configuration
+Administrators manage the hospital system.
+
+Features:
+- Admin dashboard
+- Doctor management
+- Patient management
+- Appointment management
+- Doctor schedule configuration
+- Hospital analytics
+
+---
+
+## Technology Stack
+
+### Frontend
+- React
+- TypeScript
+- React Router
+- Modern CSS UI components
+
+### Backend
+- FastAPI
+- Python
+- JWT Authentication
+- REST API Architecture
+
+### Database
+- MongoDB
+
+---
+
+## Project Structure
+
+hospital_project
 │
-├── backend/                  # FastAPI Application
-│   ├── app/
-│   │   ├── routes/           # API Controllers
-│   │   ├── models/           # Data Structures
-│   │   ├── services/         # Logic Helpers
-│   │   └── core/             # Auth & Config
-│   └── main.py               # Entry Point
+├── frontend
+│ └── src
+│ ├── components
+│ ├── pages
+│ │ ├── public
+│ │ ├── patient
+│ │ ├── doctor
+│ │ └── admin
+│ ├── services
+│ ├── styles
+│ └── App.tsx
 │
-├── docs/                     # API & Architecture Docs
-└── README.md                 # Root Documentation
-```
+├── backend
+│ └── app
+│ ├── main.py
+│ ├── routes
+│ │ ├── auth.py
+│ │ ├── doctors.py
+│ │ ├── patients.py
+│ │ └── appointments.py
+│ ├── models
+│ ├── services
+│ └── utils
+│
+├── database
+│ └── mongodb.py
+│
+├── README.md
+└── requirements.txt
 
 ---
 
-## 📄 License
-© 2026 MedicPulse. All rights reserved.
+## System Architecture
+
+Frontend (React + TypeScript)
+│
+│ REST API
+▼
+Backend (FastAPI)
+│
+│ Database Queries
+▼
+MongoDB Database
+
+---
+
+## Backend API Endpoints
+
+### Authentication
+
+POST /api/auth/register
+POST /api/auth/login
+
+
+### Patients
+
+
+GET /api/patients
+GET /api/patients/{id}
+POST /api/patients
+
+
+### Doctors
+
+
+GET /api/doctors
+GET /api/doctors/{id}
+
+
+### Appointments
+
+
+POST /api/appointments
+GET /api/appointments
+
+
+### Doctor Slots
+
+
+POST /api/doctor-slots
+GET /api/doctor-slots
+
+
+---
+
+## Appointment Booking Logic
+
+The system uses a slot-based appointment system.
+
+1. Doctors define available time slots.
+2. Patients select available slots.
+3. The system prevents duplicate bookings.
+4. Once booked, the slot becomes unavailable.
+
+---
+
+## How to Run the Project
+
+### Backend Setup
+
+Install dependencies
+
+
+pip install fastapi uvicorn pymongo python-jose passlib
+
+Run backend server
+uvicorn app.main:app --reload
+
+Backend runs at
+http://127.0.0.1:8000
+
+
+---
+
+### Frontend Setup
+
+Go to frontend folder
+cd frontend
+
+Install dependencies
+npm install
+
+Start frontend server
+npm run dev
+
+Frontend runs at
+http://localhost:5173
+
+---
+
+## Future Enhancements
+
+- Smart appointment prioritization
+- Doctor workload analytics
+- PDF prescription generation
+- Real-time notifications
+- Telemedicine integration
+
+---
+
+## Contributors
+  
+Deepti Sree — Landing Pages  
+Revathi — Patient Portal  
+Chilakamma — Appointment UI  
+Mounika — Doctor Portal  
+Sathish — Admin Portal
+Lokeshwar Reddy — Backend and System Architecture
