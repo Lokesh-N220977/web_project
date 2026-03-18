@@ -1,4 +1,6 @@
 import React from 'react';
+import '../styles/legal-pages.css';
+
 
 const Privacy: React.FC = () => {
     return (
