@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { 
+import {
   Users, Stethoscope, Bookmark, Settings, LogOut, X, PlusSquare, PieChart,
   UserPlus, CalendarDays, BarChart, FileText
 } from "lucide-react"

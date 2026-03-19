@@ -27,12 +27,12 @@ const PublicNavbar: React.FC = () => {
                 {/* Nav links + auth — grouped right */}
                 <div className={`nav-right${open ? ' nav-open' : ''}`}>
                     <div className="nav-menu">
-                        <Link to="/"        className="nav-link" onClick={() => setOpen(false)}>Home</Link>
+                        <Link to="/" className="nav-link" onClick={() => setOpen(false)}>Home</Link>
                         <Link to="/doctors" className="nav-link" onClick={() => setOpen(false)}>Doctors</Link>
-                        <a href="/#about"   className="nav-link" onClick={() => setOpen(false)}>About</a>
+                        <a href="/#about" className="nav-link" onClick={() => setOpen(false)}>About</a>
                     </div>
                     <div className="nav-auth">
-                        <Link to="/login"    className="btn-login"    onClick={() => setOpen(false)}>Login</Link>
+                        <Link to="/login" className="btn-login" onClick={() => setOpen(false)}>Login</Link>
                         <Link to="/register" className="btn-register" onClick={() => setOpen(false)}>Register</Link>
                     </div>
                 </div>
