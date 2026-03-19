@@ -11,7 +11,7 @@ function AdminLayout({ children }: Props) {
 
   return (
     <div className="pl-wrapper admin-wrapper">
-      <AdminSidebar 
+      <AdminSidebar
         mobileOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
