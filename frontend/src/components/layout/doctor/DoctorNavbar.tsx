@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from "react"
-import { Bell, Menu, ChevronDown, User, Settings, LogOut } from "lucide-react"
+import { Menu, ChevronDown, User, Settings, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../../context/AuthContext"
+import NotificationDropdown from "../../ui/NotificationDropdown"
 
 const DoctorNavbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const navigate = useNavigate()
+  const { user, logout } = useAuth()
   const [showDropdown, setShowDropdown] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -35,16 +38,15 @@ const DoctorNavbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
       </div>
 
       <div className="pn-right">
-        <button className="pn-icon-btn" onClick={() => navigate("/doctor/notifications")}>
-          <Bell size={20} />
-          <span className="pn-bell-dot">3</span>
-        </button>
+        <NotificationDropdown />
 
         <div className="pn-profile" onClick={() => setShowDropdown(!showDropdown)} ref={dropdownRef}>
-          <div className="pn-avatar" style={{ background: 'linear-gradient(135deg, #0dcb6e, #0ba358)' }}>DS</div>
+          <div className="pn-avatar" style={{ background: 'linear-gradient(135deg, #0dcb6e, #0ba358)' }}>
+            {(user?.name || "D")[0].toUpperCase()}
+          </div>
           <div className="pn-profile-info">
-            <span className="pn-name">Dr. Sarah</span>
-            <span className="pn-role">Cardiologist</span>
+            <span className="pn-name">{user?.name || "Doctor"}</span>
+            <span className="pn-role">{(user as any)?.specialization || "Practitioner"}</span>
           </div>
           <ChevronDown size={16} className={`pn-chevron${showDropdown ? " pn-chevron-open" : ""}`} />
 
@@ -67,7 +69,7 @@ const DoctorNavbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
               <hr className="pn-dropdown-hr" />
               <button 
                 type="button" 
-                onMouseDown={() => handleNav("/login")} 
+                onClick={logout} 
                 className="pn-dropdown-item pn-dropdown-danger"
               >
                 <LogOut size={16} /> <span>Logout</span>

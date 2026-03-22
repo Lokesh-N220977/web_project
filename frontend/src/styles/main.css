@@ -2,6 +2,7 @@
 @import url('base/variables.css');
 @import url('base/reset.css');
 @import url('base/typography.css');
+@import url('base/responsive-layout.css');
 
 /* Layout Modules */
 @import url('layout/navbar.css');
@@ -30,9 +31,6 @@
 @import url('pages/admin.css');
 @import url('pages/doctor.css');
 @import url('pages/patient.css');
-@import url('pages/patient-pages.css');
-@import url('pages/patient-pages2.css');
-@import url('pages/patient-pages3.css');
 @import url('pages/patient-responsive.css');
 
 /* Utilities */

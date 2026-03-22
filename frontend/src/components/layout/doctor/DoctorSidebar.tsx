@@ -1,8 +1,12 @@
-import { useNavigate, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { 
-  LayoutDashboard, Clock, Users, History, FileText, 
-  User, LogOut, X, PlusSquare, CalendarCheck, Settings, Bell 
+  LayoutDashboard, ClipboardList, Clock, Users, History, 
+  FileText, User, Settings, LogOut, 
+  CalendarX, X
 } from "lucide-react"
+
+import { useAuth } from "../../../context/AuthContext"
+import logo from "../../../assets/logo.png"
 
 interface DoctorSidebarProps {
   mobileOpen?: boolean
@@ -10,17 +14,17 @@ interface DoctorSidebarProps {
 }
 
 const DoctorSidebar = ({ mobileOpen = false, onClose }: DoctorSidebarProps) => {
-  const navigate = useNavigate()
+  const { user, logout } = useAuth()
   const links = [
     { title: "Dashboard",           path: "/doctor/dashboard",          icon: <LayoutDashboard size={20} /> },
-    { title: "Today's Appointments",path: "/doctor/today-appointments",icon: <CalendarCheck size={20} /> },
-    { title: "My Schedule",         path: "/doctor/schedule",           icon: <Clock size={20} /> },
-    { title: "Patients",           path: "/doctor/patients",           icon: <Users size={20} /> },
+    { title: "Appointments",        path: "/doctor/appointments",       icon: <ClipboardList size={20} /> },
+    { title: "Schedule",            path: "/doctor/my-schedule",        icon: <Clock size={20} /> },
+    { title: "Manage Leaves",       path: "/doctor/leaves",             icon: <CalendarX size={20} /> },
+    { title: "Patients",            path: "/doctor/patients",           icon: <Users size={20} /> },
     { title: "Visit History",       path: "/doctor/visit-history",      icon: <History size={20} /> },
-    { title: "Prescriptions",      path: "/doctor/prescriptions",      icon: <FileText size={20} /> },
-    { title: "Notifications",      path: "/doctor/notifications",      icon: <Bell size={20} />, badge: 3 },
-    { title: "Profile",            path: "/doctor/profile",            icon: <User size={20} /> },
-    { title: "Settings",           path: "/doctor/settings",           icon: <Settings size={20} /> },
+    { title: "Prescriptions",       path: "/doctor/prescriptions",      icon: <FileText size={20} /> },
+    { title: "Profile",             path: "/doctor/profile",            icon: <User size={20} /> },
+    { title: "Settings",            path: "/doctor/settings",           icon: <Settings size={20} /> },
   ]
 
   return (
@@ -30,11 +34,9 @@ const DoctorSidebar = ({ mobileOpen = false, onClose }: DoctorSidebarProps) => {
         <div className="ps-overlay ps-overlay-open" onClick={onClose} />
       )}
 
-      <aside className={`patient-sidebar${mobileOpen ? " ps-open" : ""}`}>
-        <div className="ps-logo">
-          <div className="ps-logo-icon" style={{ background: 'linear-gradient(135deg, #0dcb6e, #0ba358)' }}>
-            <PlusSquare size={24} color="#fff" fill="#fff" />
-          </div>
+      <aside className={`patient-sidebar dr-sidebar-theme${mobileOpen ? " ps-open" : ""}`}>
+        <div className="ps-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <img src={logo} alt="Logo" style={{ height: '32px', width: 'auto' }} />
           <span className="ps-logo-text">MedicPulse</span>
           <button className="ps-close-btn" onClick={onClose}>
             <X size={20} />
@@ -44,12 +46,12 @@ const DoctorSidebar = ({ mobileOpen = false, onClose }: DoctorSidebarProps) => {
         {/* Doctor Info (Similar to patient view for consistency) */}
         <div className="ps-user">
           <div className="ps-avatar" style={{ background: 'linear-gradient(135deg, #0dcb6e, #0ba358)' }}>
-            <span>DS</span>
+            <span>{(user?.name || "D")[0].toUpperCase()}</span>
             <span className="ps-online-dot" />
           </div>
           <div className="ps-user-info">
-            <p className="ps-user-name">Dr. Sarah</p>
-            <p className="ps-user-role">Cardiologist</p>
+            <p className="ps-user-name">{user?.name || "Doctor"}</p>
+            <p className="ps-user-role">Practitioner</p>
           </div>
         </div>
 
@@ -65,7 +67,6 @@ const DoctorSidebar = ({ mobileOpen = false, onClose }: DoctorSidebarProps) => {
               >
                 <span className="ps-link-icon">{link.icon}</span>
                 <span className="ps-link-label">{link.title}</span>
-                {link.badge && <span className="ps-badge">{link.badge}</span>}
               </NavLink>
             ))}
           </div>
@@ -73,7 +74,7 @@ const DoctorSidebar = ({ mobileOpen = false, onClose }: DoctorSidebarProps) => {
 
         <div className="ps-footer">
           <div className="ps-divider" />
-          <button className="ps-logout-btn" onClick={() => navigate("/login")}>
+          <button className="ps-logout-btn" onClick={logout}>
             <LogOut size={20} />
             <span>Logout</span>
           </button>
