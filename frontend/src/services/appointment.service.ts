@@ -28,8 +28,13 @@ export const appointmentService = {
     const { data } = await api.get('/slots', {
       params: { doctor_id: doctorId, date }
     });
-    // This wasn't changed but just in case
-    return data as { slots: {time: string, booked: boolean}[]; reason?: string; success?: boolean; data?: any };
+    // Handle backend returning an array directly
+    if (Array.isArray(data)) {
+        return { slots: data.map(s => ({ time: s.time, booked: s.is_full })) };
+    }
+    // Handle backend returning { success: true, data: [...] } or { slots: [...] }
+    const actualSlots = data.slots || data.data || [];
+    return { slots: actualSlots.map((s:any) => ({ time: s.time, booked: s.booked ?? s.is_full })) };
   },
 
   async updateAppointmentStatus(appointmentId: string, status: string) {
@@ -49,11 +54,10 @@ export const appointmentService = {
   },
 
   async getHardenedAvailability(doctorId: string, date: string) {
-    const { data } = await api.get(`/doctors/${doctorId}/availability`, {
-      params: { date }
+    const { data } = await api.get(`/slots`, {
+      params: { doctor_id: doctorId, date }
     });
-    // Now returns { date, locations: [{location_id, location_name, shifts: [...]}] }
-    return data as { date: string; locations: any[] };
+    return data as any[];
   },
 
   async getDoctorLocations(doctorId: string) {
@@ -61,16 +65,21 @@ export const appointmentService = {
     return data as any[];
   },
 
+
+  async getEmergencySlot(symptoms: string, preferredDate: string) {
+    const { data } = await api.post('/emergency-slot', { symptoms, preferred_date: preferredDate });
+    return data;
+  },
+
   async bookHardenedAppointment(bookingData: { 
     doctor_id: string; 
     patient_id: string; 
-    location_id: string;
     date: string; 
-    shift_id: string;
+    slot_time: string;
     symptoms: string[];
     idempotency_key: string;
   }) {
-    const { data } = await api.post('/appointments/book', bookingData);
+    const { data } = await api.post('/appointments', bookingData);
     return data;
   },
 
@@ -84,6 +93,10 @@ export const appointmentService = {
     return data;
   },
 
+  async cancelAppointment(appointmentId: string) {
+    return this.cancelHardenedAppointment(appointmentId);
+  },
+
   async getMyAppointments() {
     const { data } = await api.get('/appointments/my-appointments');
     return data.success ? data.data : data;
@@ -92,6 +105,11 @@ export const appointmentService = {
   async getMyPatients() {
     const { data } = await api.get('/patients/my');
     return data.success ? data.data : data as PatientRecord[];
+  },
+
+  async getBranches() {
+    const { data } = await api.get('/locations');
+    return data as any[];
   },
 
   async getDashboardData() {

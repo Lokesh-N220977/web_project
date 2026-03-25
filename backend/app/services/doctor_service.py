@@ -117,12 +117,18 @@ async def get_doctor_by_user_id(user_id: str):
     return doctor
 
 async def delete_doctor(doctor_id: str):
-    from app.database import appointments_collection
+    from app.database import appointments_collection, doctor_schedules_collection, doctors_collection
     
-    # mark doctor as not available
+    # mark doctor as not available and deleted
     await doctors_collection.update_one(
         {"_id": ObjectId(doctor_id)},
-        {"$set": {"available": False, "is_deleted": True}}
+        {"$set": {"available": False, "is_deleted": True, "status": "deleted"}}
+    )
+    
+    # deactivate all schedules for this doctor
+    await doctor_schedules_collection.update_many(
+        {"doctor_id": ObjectId(doctor_id)},
+        {"$set": {"is_active": False}}
     )
     
     # get doctor to find user_id
@@ -130,14 +136,23 @@ async def delete_doctor(doctor_id: str):
     if doc and "user_id" in doc:
         await users_collection.update_one(
             {"_id": ObjectId(doc["user_id"])},
-            {"$set": {"is_active": False}}
+            {"$set": {"is_active": False, "status": "suspended"}}
         )
     
     # cancel future appointments
     now_str = datetime.utcnow().strftime("%Y-%m-%d")
     await appointments_collection.update_many(
-        {"doctor_id": {"$in": [ObjectId(doctor_id), doctor_id]}, "status": "booked"},
-        {"$set": {"status": "cancelled", "cancel_reason": "Doctor no longer available", "cancelled_by": "system", "is_active": False}}
+        {
+            "doctor_id": {"$in": [ObjectId(doctor_id), doctor_id]}, 
+            "status": "booked",
+            "date": {"$gte": now_str}
+        },
+        {"$set": {
+            "status": "cancelled", 
+            "cancel_reason": "Doctor no longer available (Terminated)", 
+            "cancelled_by": "system", 
+            "is_active": False
+        }}
     )
-    logger.info(f"Doctor {doctor_id} logically deleted and future appointments cancelled.")
+    logger.info(f"Doctor {doctor_id} fully deactivated, schedules disabled, and future appointments cancelled.")
     return True

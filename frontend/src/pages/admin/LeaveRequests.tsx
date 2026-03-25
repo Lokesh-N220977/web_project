@@ -64,31 +64,31 @@ function LeaveRequests() {
                     <div className="ad-list-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
                         <div className="ad-filter-bar">
                             <button 
-                                className={`ad-btn-warning ${filter === 'pending' ? '' : 'ad-btn-outline'}`}
+                                className={`ad-filter-pill ad-filter-pill--pending ${filter === 'pending' ? 'active' : ''}`}
                                 onClick={() => setFilter("pending")}
-                                style={{ padding: '8px 16px', borderRadius: '10px' }}
                             >
+                                <Clock size={16} />
                                 Pending
                             </button>
                             <button 
-                                className={`ad-btn-success ${filter === 'approved' ? '' : 'ad-btn-outline'}`}
+                                className={`ad-filter-pill ad-filter-pill--approved ${filter === 'approved' ? 'active' : ''}`}
                                 onClick={() => setFilter("approved")}
-                                style={{ padding: '8px 16px', borderRadius: '10px' }}
                             >
+                                <Check size={16} />
                                 Approved
                             </button>
                             <button 
-                                className={`ad-btn-danger ${filter === 'rejected' ? '' : 'ad-btn-outline'}`}
+                                className={`ad-filter-pill ad-filter-pill--rejected ${filter === 'rejected' ? 'active' : ''}`}
                                 onClick={() => setFilter("rejected")}
-                                style={{ padding: '8px 16px', borderRadius: '10px' }}
                             >
+                                <X size={16} />
                                 Rejected
                             </button>
                             <button 
-                                className={`ad-btn-duo ${filter === 'all' ? '' : 'ad-btn-outline'}`}
+                                className={`ad-filter-pill ad-filter-pill--all ${filter === 'all' ? 'active' : ''}`}
                                 onClick={() => setFilter("all")}
-                                style={{ padding: '8px 16px', borderRadius: '10px' }}
                             >
+                                <Search size={16} />
                                 All
                             </button>
                         </div>
@@ -147,8 +147,7 @@ function LeaveRequests() {
                                                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                                                         <button 
                                                             disabled={!!actionLoading}
-                                                            className="ad-btn-success" 
-                                                            style={{ padding: '8px', borderRadius: '8px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                                            className="ad-action-btn approve" 
                                                             onClick={() => handleAction(leave._id, 'approved')}
                                                             title="Approve Leave"
                                                         >
@@ -156,8 +155,7 @@ function LeaveRequests() {
                                                         </button>
                                                         <button 
                                                             disabled={!!actionLoading}
-                                                            className="ad-btn-danger" 
-                                                            style={{ padding: '8px', borderRadius: '8px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                                            className="ad-action-btn reject" 
                                                             onClick={() => handleAction(leave._id, 'rejected')}
                                                             title="Reject Leave"
                                                         >

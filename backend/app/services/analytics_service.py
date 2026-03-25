@@ -96,7 +96,8 @@ async def get_department_workload():
         # Ensure we have a label if specialization is missing or empty
         processed = []
         for r in results:
-            label = r["_id"] if r["_id"] else "General/Other"
+            # Grouping _id can be an ObjectId if raw data is inconsistent
+            label = str(r["_id"]) if r["_id"] else "General/Other"
             processed.append({"_id": label, "total": r["total"]})
         return processed
     except Exception as e:

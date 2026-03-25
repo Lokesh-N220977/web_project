@@ -10,6 +10,9 @@ import FindDoctors from "./pages/public/FindDoctors"
 import Login from "./pages/public/Login"
 import Register from "./pages/public/Register"
 
+// Shared
+import PrescriptionDocument from "./pages/shared/PrescriptionDocument"
+
 // Patient
 import Dashboard from "./pages/patient/Dashboard"
 import BookAppointment from "./pages/patient/BookAppointment"
@@ -70,6 +73,8 @@ function App() {
 
           {/* Protected Patient Routes */}
           <Route element={<ProtectedRoute />}>
+            <Route path="/prescription/:id/print" element={<PrescriptionDocument />} />
+            
             <Route element={<RoleProtectedRoute allowedRoles={['patient']} />}>
               <Route path="/patient/dashboard" element={<Dashboard />} />
               <Route path="/patient/book-appointment" element={<BookAppointment />} />

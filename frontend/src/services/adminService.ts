@@ -65,6 +65,12 @@ export const getGlobalSchedules = (search?: string) =>
 export const resetGlobalSchedules = () => 
     api.post(`/admin/reset-all-schedules`).then(res => res.data);
 
+export const getDoctorSchedules = (doctorId: string, dayOfWeek: number) =>
+    api.get(`/schedules/${doctorId}?day_of_week=${dayOfWeek}`).then(res => res.data);
+
+export const saveDoctorSchedule = (schedule: any) =>
+    api.post(`/schedules`, schedule).then(res => res.data);
+
 export const getPendingDoctors = () => 
     api.get(`/admin/pending-doctors`).then(res => res.data);
 
