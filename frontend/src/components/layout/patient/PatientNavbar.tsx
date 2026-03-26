@@ -47,8 +47,8 @@ const PatientNavbar = ({ onMenuClick }: PatientNavbarProps) => {
           <Menu size={22} />
         </button>
         <div className="pn-title-wrap">
-          <h1 className="pn-page-title">{title}</h1>
-          <p className="pn-breadcrumb">MedicPulse Hospital &rsaquo; {title}</p>
+          <h1 className="pn-page-title text-primary-gradient" style={{ fontSize: '1.4rem', fontWeight: 800 }}>{title}</h1>
+          <p className="pn-breadcrumb" style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.8 }}>MedicPulse Hospital &rsaquo; {title}</p>
         </div>
       </div>
 

@@ -60,10 +60,13 @@ const AdminSidebar = ({ mobileOpen = false, onClose }: AdminSidebarProps) => {
     <>
       <div className={`ps-overlay${mobileOpen ? " ps-overlay-open" : ""}`} onClick={onClose} />
 
-      <aside className={`patient-sidebar ad-sidebar-theme${mobileOpen ? " ps-open" : ""}`}>
+      <aside className={`admin-sidebar ad-sidebar-theme${mobileOpen ? " ps-open" : ""}`}>
         <div className="ps-logo">
           <img src={logo} alt="Logo" className="ps-logo-img" />
-          <span className="ps-logo-text">Medic<span className="text-primary-gradient">Pulse</span></span>
+          <span className="ps-logo-text" style={{ fontSize: '1.05rem', letterSpacing: '-0.03em', fontWeight: 900, display: 'flex' }}>
+            <span style={{ color: 'var(--text-dark)' }}>Medic</span>
+            <span style={{ background: 'linear-gradient(to right, #10b981, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Pulse</span>
+          </span>
           <button className="ps-close-btn" onClick={onClose}>
             <X size={20} />
           </button>

@@ -68,8 +68,8 @@ export default function DoctorNotifications() {
         {/* Header */}
         <div className="pd-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <div className="pd-header-content">
-            <h1 className="pd-page-title" style={{ fontSize: '24px', fontWeight: 'bold' }}>Notifications</h1>
-            <p className="pd-page-sub" style={{ color: '#6b7280' }}>Keep track of patient alerts, appointments, and updates.</p>
+            <h1 className="pd-page-title" style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--text-dark)' }}>Notifications</h1>
+            <p className="pd-page-sub" style={{ color: 'var(--text-muted)' }}>Keep track of patient alerts, appointments, and updates.</p>
           </div>
           <div className="pd-header-actions">
             {unreadCount > 0 && (
@@ -85,11 +85,11 @@ export default function DoctorNotifications() {
         </div>
 
         {/* Notifications List */}
-        <div className="pd-notif-layout" style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+        <div className="pd-notif-layout" style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'var(--bg-white)', padding: '24px', borderRadius: '12px', border: '1px solid var(--glass-border)', boxShadow: 'var(--shadow-sm)' }}>
           {loading ? (
-            <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>Loading notifications...</div>
+            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>Loading notifications...</div>
           ) : notifs.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '60px', color: '#6b7280', background: '#f8fafc', borderRadius: '8px' }}>
+            <div style={{ textAlign: 'center', padding: '60px', color: 'var(--text-muted)', background: 'var(--bg-soft)', borderRadius: '8px' }}>
               <Bell size={48} style={{ margin: '0 auto 16px', opacity: 0.2 }} />
               <p>No notifications yet</p>
             </div>
@@ -100,9 +100,8 @@ export default function DoctorNotifications() {
                 style={{ 
                   padding: '16px', 
                   borderRadius: '8px', 
-                  border: '1px solid',
-                  borderColor: notif.is_read ? '#e2e8f0' : '#bbf7d0',
-                  backgroundColor: notif.is_read ? '#f8fafc' : '#f0fdf4',
+                  border: '1px solid var(--glass-border)',
+                  backgroundColor: notif.is_read ? 'transparent' : 'rgba(16, 185, 129, 0.08)',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'flex-start',
@@ -111,8 +110,8 @@ export default function DoctorNotifications() {
               >
                 <div style={{ display: 'flex', gap: '12px' }}>
                   <div style={{ 
-                    background: notif.is_read ? '#e2e8f0' : '#dcfce7', 
-                    color: notif.is_read ? '#64748b' : '#16a34a',
+                    background: notif.is_read ? 'var(--bg-soft)' : 'rgba(16, 185, 129, 0.12)', 
+                    color: notif.is_read ? 'var(--text-muted)' : '#10b981',
                     padding: '10px',
                     borderRadius: '50%',
                     display: 'flex',
@@ -122,19 +121,19 @@ export default function DoctorNotifications() {
                     <Bell size={20} />
                   </div>
                   <div>
-                    <h4 style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: notif.is_read ? '500' : '600', color: '#0f172a' }}>
+                    <h4 style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: notif.is_read ? '500' : '600', color: 'var(--text-dark)' }}>
                       {notif.title}
                     </h4>
-                    <p style={{ margin: '0 0 8px', fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
+                    <p style={{ margin: '0 0 8px', fontSize: '14px', color: 'var(--text-main)', lineHeight: '1.5' }}>
                       {notif.message}
                     </p>
-                    <span style={{ fontSize: '12px', color: '#94a3b8' }}>{formatDate(notif.created_at)}</span>
+                    <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{formatDate(notif.created_at)}</span>
                   </div>
                 </div>
                 {!notif.is_read && (
                   <button 
                     onClick={(e) => markRead(notif.id, e)}
-                    style={{ background: 'none', border: 'none', color: '#16a34a', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}
+                    style={{ background: 'none', border: 'none', color: '#10b981', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}
                   >
                     Mark as read
                   </button>

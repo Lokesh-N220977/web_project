@@ -182,8 +182,8 @@ img {
   overflow-x: hidden;
 }
 
-/* 11. Portal Sidebar System */
-.patient-sidebar {
+/* 11. Portal Sidebar System (Shared across Portals) */
+.patient-sidebar, .doctor-sidebar, .admin-sidebar {
   width: 260px;
   background: var(--bg-white);
   height: 100vh;
@@ -200,10 +200,10 @@ img {
 }
 
 @media (min-width: 1024px) {
-  .patient-sidebar { transform: translateX(0); }
+  .patient-sidebar, .doctor-sidebar, .admin-sidebar { transform: translateX(0); }
 }
 
-.patient-sidebar.ps-open { transform: translateX(0); }
+.patient-sidebar.ps-open, .doctor-sidebar.ps-open, .admin-sidebar.ps-open { transform: translateX(0); }
 
 .ps-logo {
   display: flex;

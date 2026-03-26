@@ -141,7 +141,10 @@ const Register: React.FC = () => {
                 <div className="split-left-content">
                     <div className="brand">
                         <img src={logo} alt="MedicPulse Logo" />
-                        MedicPulse
+                        <span className="ps-logo-text" style={{ fontSize: '1.2rem', display: 'inline-flex', alignItems: 'center' }}>
+                            <span style={{ color: '#ffffff' }}>Medic</span>
+                            <span style={{ background: 'linear-gradient(to right, #10b981, #ffffff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Pulse</span>
+                        </span>
                     </div>
                     <h2>Join Our Healthcare Platform</h2>
                     <p>Create your free account to book appointments with verified specialists and manage your health seamlessly.</p>

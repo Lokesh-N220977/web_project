@@ -239,13 +239,14 @@ function BookAppointment() {
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div 
               onClick={() => canClick && setStep(i + 1)}
+              className={`pt-step ${isDone ? 'done' : isCurrent ? 'current' : ''}`}
               style={{ 
                 width: '40px', 
                 height: '40px', 
                 borderRadius: '50%', 
-                background: isDone ? '#10b981' : isCurrent ? '#3b82f6' : '#fff', 
-                border: isCurrent || isDone ? 'none' : '2px solid #e2e8f0',
-                color: isDone || isCurrent ? '#fff' : '#94a3b8', 
+                background: isDone ? '#10b981' : isCurrent ? '#3b82f6' : 'var(--bg-soft)', 
+                border: isCurrent || isDone ? 'none' : '2px solid var(--border-color)',
+                color: isDone || isCurrent ? '#fff' : 'var(--text-gray)', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center', 
@@ -257,7 +258,7 @@ function BookAppointment() {
               }}>
               {isDone ? <CheckCircle2 size={24} /> : i + 1}
             </div>
-            {i < totalSteps - 1 && <div style={{ height: '3px', width: '40px', background: isDone ? '#10b981' : '#e2e8f0', transition: '0.3s' }} />}
+            {i < totalSteps - 1 && <div style={{ height: '3px', width: '40px', background: isDone ? '#10b981' : 'var(--border-color)', transition: '0.3s' }} />}
           </div>
         )})}
       </div>
@@ -268,11 +269,11 @@ function BookAppointment() {
       return (
           <PatientLayout>
               <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 20px', textAlign: 'center', animation: 'fadeIn 0.5s' }}>
-                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#d1fae5', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--status-success-bg)', color: 'var(--status-success-text)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', border: '2px solid var(--status-success-text)' }}>
                       <CheckCircle2 size={40} />
                   </div>
-                  <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px' }}>Appointment Confirmed!</h1>
-                  <p style={{ color: '#475569', fontSize: '1.1rem', marginBottom: '40px' }}>Your booking has been successfully protected and locked.</p>
+                  <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: '16px' }}>Appointment Confirmed!</h1>
+                  <p style={{ color: 'var(--text-gray)', fontSize: '1.1rem', marginBottom: '40px' }}>Your booking has been successfully protected and locked.</p>
                   <button onClick={() => navigate('/patient/appointments')} className="btn-primary" style={{ padding: '14px 32px', fontSize: '1.1rem', borderRadius: '12px' }}>
                       View My Appointments
                   </button>
@@ -286,15 +287,15 @@ function BookAppointment() {
       <div className="pt-page" style={{ maxWidth: '1000px', margin: '0 auto' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', marginBottom: '8px', letterSpacing: '-0.02em' }}>Book Appointment</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem', fontWeight: 500 }}>Select your preferred mode and provider to secure your health slot.</p>
+          <h1 className="text-primary-gradient" style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '8px', letterSpacing: '-0.02em' }}>Book Appointment</h1>
+          <p style={{ color: 'var(--text-gray)', fontSize: '1.1rem', fontWeight: 500 }}>Select your preferred mode and provider to secure your health slot.</p>
         </div>
 
         {renderProgress()}
 
         <div style={{ minHeight: '500px' }}>
             {error && (
-            <div style={{ padding: '16px', background: '#fef2f2', color: '#991b1b', borderRadius: '12px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 600, border: '1px solid #fee2e2' }}>
+            <div style={{ padding: '16px', background: 'var(--status-error-bg)', color: 'var(--status-error-text)', borderRadius: '12px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 600, border: '1px solid var(--status-error-text)' }}>
                 <Activity size={20} /> {error}
             </div>
             )}
@@ -302,36 +303,36 @@ function BookAppointment() {
             {/* STEP 1: INITIAL BOOKING MODE & PATIENT SELECTION */}
             {step === 1 && (
             <div className="pt-card" style={{ animation: 'slideUp 0.4s', borderRadius: '24px' }}>
-                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '25px', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '25px', color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <Zap size={24} color="#3b82f6" /> 1. Booking Type
                 </h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-                    <div onClick={() => handleModeChange("standard")} style={{ padding: '30px', borderRadius: '20px', border: bookingMode === 'standard' ? '2.5px solid #3b82f6' : '1.5px solid #e2e8f0', cursor: 'pointer', background: bookingMode === 'standard' ? '#eff6ff' : '#fff', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', transform: bookingMode === 'standard' ? 'scale(1.02)' : 'none', position: 'relative' }}>
+                    <div onClick={() => handleModeChange("standard")} className={`pt-mode-card ${bookingMode === 'standard' ? 'active' : ''}`}>
                         {bookingMode === 'standard' && <div style={{ position: 'absolute', top: '15px', right: '15px' }}><CheckCircle2 color="#3b82f6" size={20} /></div>}
                         <Calendar size={36} color={bookingMode === 'standard' ? '#3b82f6' : '#94a3b8'} style={{ marginBottom: '15px' }} />
-                        <h4 style={{ fontWeight: 800, fontSize: '1.25rem', color: '#1e293b' }}>Standard Booking</h4>
-                        <p style={{ color: '#64748b', fontSize: '0.95rem', marginTop: '8px', lineHeight: 1.5 }}>Select specialist, doctor, and specific schedule natively.</p>
+                        <h4 style={{ fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-dark)' }}>Standard Booking</h4>
+                        <p style={{ color: 'var(--text-gray)', fontSize: '0.95rem', marginTop: '8px', lineHeight: 1.5 }}>Select specialist, doctor, and specific schedule natively.</p>
                     </div>
-                    <div onClick={() => handleModeChange("emergency")} style={{ padding: '30px', borderRadius: '20px', border: bookingMode === 'emergency' ? '2.5px solid #ef4444' : '1.5px solid #e2e8f0', cursor: 'pointer', background: bookingMode === 'emergency' ? '#fef2f2' : '#fff', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', transform: bookingMode === 'emergency' ? 'scale(1.02)' : 'none', position: 'relative' }}>
+                    <div onClick={() => handleModeChange("emergency")} className={`pt-mode-card ${bookingMode === 'emergency' ? 'active emergency' : ''}`}>
                         {bookingMode === 'emergency' && <div style={{ position: 'absolute', top: '15px', right: '15px' }}><CheckCircle2 color="#ef4444" size={20} /></div>}
                         <Zap size={36} color={bookingMode === 'emergency' ? '#ef4444' : '#94a3b8'} style={{ marginBottom: '15px' }} />
-                        <h4 style={{ fontWeight: 800, fontSize: '1.25rem', color: '#1e293b' }}>Emergency Slot</h4>
-                        <p style={{ color: '#64748b', fontSize: '0.95rem', marginTop: '8px', lineHeight: 1.5 }}>Skip to the fastest possible global slot instantly.</p>
+                        <h4 style={{ fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-dark)' }}>Emergency Slot</h4>
+                        <p style={{ color: 'var(--text-gray)', fontSize: '0.95rem', marginTop: '8px', lineHeight: 1.5 }}>Skip to the fastest possible global slot instantly.</p>
                     </div>
                 </div>
 
-                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '25px', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '25px', color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <User size={24} color="#3b82f6" /> 2. Who is this for?
                 </h3>
                 {loading && patients.length === 0 ? <div style={{ padding: '40px', textAlign: 'center' }}><Loader2 className="animate-spin" size={32} color="#3b82f6" /></div> : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
                     {patients.map(p => (
-                    <div key={p._id} onClick={() => handlePatientChange(p._id)} style={{ padding: '24px', borderRadius: '20px', border: selectedPatient === p._id ? '2.5px solid #3b82f6' : '1.5px solid #e2e8f0', cursor: 'pointer', background: selectedPatient === p._id ? '#eff6ff' : '#fff', display: 'flex', alignItems: 'center', gap: '20px', transition: 'all 0.3s', position: 'relative' }}>
+                    <div key={p._id} onClick={() => handlePatientChange(p._id)} className={`pt-patient-item ${selectedPatient === p._id ? 'active' : ''}`}>
                         {selectedPatient === p._id && <div style={{ position: 'absolute', top: '12px', right: '12px' }}><CheckCircle2 color="#3b82f6" size={18} /></div>}
-                        <div style={{ background: selectedPatient === p._id ? '#3b82f6' : '#f1f5f9', width: '56px', height: '56px', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: selectedPatient === p._id ? '#fff' : '#64748b', transition: '0.3s' }}><User size={28} /></div>
+                        <div style={{ background: selectedPatient === p._id ? '#3b82f6' : 'var(--bg-soft)', width: '56px', height: '56px', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: selectedPatient === p._id ? '#fff' : 'var(--text-gray)', transition: '0.3s' }}><User size={28} /></div>
                         <div>
-                            <h4 style={{ fontWeight: 800, color: '#1e293b', fontSize: '1.1rem' }}>{p.name}</h4>
-                            {p.created_by === 'self' && <span style={{ fontSize: '0.75rem', background: '#dbeafe', color: '#1d4ed8', padding: '3px 10px', borderRadius: '20px', fontWeight: 800, textTransform: 'uppercase' }}>Self Account</span>}
+                            <h4 style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '1.1rem' }}>{p.name}</h4>
+                            {p.created_by === 'self' && <span style={{ fontSize: '0.75rem', background: 'var(--primary-light)', color: 'var(--primary)', padding: '3px 10px', borderRadius: '20px', fontWeight: 800, textTransform: 'uppercase', border: '1px solid var(--glass-border)' }}>Self Account</span>}
                         </div>
                     </div>
                     ))}
@@ -365,9 +366,9 @@ function BookAppointment() {
                                     padding: '16px 32px', 
                                     borderRadius: '16px', 
                                     border: 'none', 
-                                    background: selectedSpecialty === spec ? '#1e293b' : '#f8fafc', 
-                                    color: selectedSpecialty === spec ? '#fff' : '#475569', 
-                                    boxShadow: selectedSpecialty === spec ? '0 10px 20px rgba(30,41,59,0.2)' : '0 4px 6px rgba(0,0,0,0.02)',
+                                    background: selectedSpecialty === spec ? 'var(--text-dark)' : 'var(--bg-soft)', 
+                                    color: selectedSpecialty === spec ? 'var(--bg-light)' : 'var(--text-gray)', 
+                                    boxShadow: selectedSpecialty === spec ? '0 10px 20px rgba(0,0,0,0.2)' : '0 4px 6px rgba(0,0,0,0.02)',
                                     fontWeight: 800, 
                                     fontSize: '1rem',
                                     cursor: 'pointer', 
@@ -405,7 +406,7 @@ function BookAppointment() {
                         </h3>
                     </div>
 
-                    <p style={{ color: '#64748b', marginBottom: '25px', fontSize: '1.05rem', fontWeight: 500 }}>
+                    <p style={{ color: 'var(--text-gray)', marginBottom: '25px', fontSize: '1.05rem', fontWeight: 500 }}>
                         We will find the fastest global available slot based on your symptoms.
                     </p>
 
@@ -415,9 +416,9 @@ function BookAppointment() {
                                 key={idx}
                                 onClick={() => toggleSymptom(s.label)}
                                 style={{ padding: '14px 24px', borderRadius: '16px', fontWeight: 800, border: '2px solid',
-                                    borderColor: selectedSymptoms.includes(s.label) ? '#ef4444' : '#e2e8f0',
-                                    background: selectedSymptoms.includes(s.label) ? '#fef2f2' : '#fff',
-                                    color: selectedSymptoms.includes(s.label) ? '#dc2626' : '#475569',
+                                    borderColor: selectedSymptoms.includes(s.label) ? '#ef4444' : 'var(--border-color)',
+                                    background: selectedSymptoms.includes(s.label) ? 'rgba(239, 68, 68, 0.12)' : 'var(--bg-white)',
+                                    color: selectedSymptoms.includes(s.label) ? '#ef4444' : 'var(--text-gray)',
                                     cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: '10px',
                                     boxShadow: selectedSymptoms.includes(s.label) ? '0 8px 15px rgba(239,68,68,0.15)' : 'none'
                                 }}
@@ -429,19 +430,19 @@ function BookAppointment() {
                     </div>
 
                     <div style={{ marginBottom: '30px' }}>
-                        <label style={{ display: 'block', fontWeight: 800, marginBottom: '12px', color: '#1e293b', fontSize: '1.1rem' }}>Other Symptoms (Optional)</label>
+                        <label style={{ display: 'block', fontWeight: 800, marginBottom: '12px', color: 'var(--text-dark)', fontSize: '1.1rem' }}>Other Symptoms (Optional)</label>
                         <input 
                             type="text" 
                             value={customSymptom} 
                             onChange={(e) => setCustomSymptom(e.target.value)}
                             placeholder="e.g. skin rash, blurry vision..."
                             className="pt-input"
-                            style={{ padding: '18px', fontSize: '1.1rem', background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '16px' }}
+                            style={{ padding: '18px', fontSize: '1.1rem', background: 'var(--bg-soft)', border: '1.5px solid var(--border-color)', borderRadius: '16px', color: 'var(--text-main)' }}
                         />
                     </div>
                     
                     <div onClick={() => dateInputRef.current?.showPicker()} style={{ marginBottom: '35px', cursor: 'pointer' }}>
-                        <label style={{ display: 'block', fontWeight: 800, marginBottom: '12px', color: '#1e293b', fontSize: '1.1rem' }}>Preferred Date</label>
+                        <label style={{ display: 'block', fontWeight: 800, marginBottom: '12px', color: 'var(--text-dark)', fontSize: '1.1rem' }}>Preferred Date</label>
                         <div style={{ position: 'relative' }}>
                             <input 
                                 ref={dateInputRef}
@@ -450,7 +451,7 @@ function BookAppointment() {
                                 min={new Date().toISOString().split("T")[0]}
                                 onChange={(e) => setSelectedDate(e.target.value)}
                                 className="pt-input"
-                                style={{ padding: '18px 18px 18px 54px', fontSize: '1.1rem', background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '16px', width: '100%', cursor: 'pointer' }}
+                                style={{ padding: '18px 18px 18px 54px', fontSize: '1.1rem', background: 'var(--bg-soft)', border: '1.5px solid var(--border-color)', borderRadius: '16px', width: '100%', cursor: 'pointer', color: 'var(--text-main)' }}
                             />
                             <Calendar size={22} style={{ position: 'absolute', left: '18px', top: '50%', transform: 'translateY(-50%)', color: '#3b82f6' }} />
                         </div>
@@ -475,15 +476,15 @@ function BookAppointment() {
                 <div className="pt-card" style={{ animation: 'slideUp 0.4s', borderRadius: '24px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '25px', marginBottom: '35px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                            <div onClick={() => setStep(2)} style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: '0.2s' }}>
-                                <ChevronLeft size={20} />
+                            <div onClick={() => setStep(2)} style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'var(--bg-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: '0.2s', border: '1px solid var(--border-color)' }}>
+                                <ChevronLeft size={20} color="var(--text-dark)" />
                             </div>
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: 900, margin: 0, color: '#0f172a' }}>Available Specialists</h3>
+                            <h3 style={{ fontSize: '1.5rem', fontWeight: 900, margin: 0, color: 'var(--text-dark)' }}>Available Specialists</h3>
                         </div>
                         
                         <div style={{ position: 'relative', width: '100%' }}>
-                            <Search size={22} style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-                            <input type="text" placeholder="Search by physician name or expertise..." value={doctorSearch} onChange={e => setDoctorSearch(e.target.value)} style={{ width: '100%', padding: '20px 20px 20px 60px', borderRadius: '18px', border: '1.5px solid #e2e8f0', outline: 'none', background: '#f8fafc', fontSize: '1.1rem', fontWeight: 600, transition: '0.3s' }} />
+                            <Search size={22} style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-gray)' }} />
+                            <input type="text" placeholder="Search by physician name or expertise..." value={doctorSearch} onChange={e => setDoctorSearch(e.target.value)} style={{ width: '100%', padding: '20px 20px 20px 60px', borderRadius: '18px', border: '1.5px solid var(--border-color)', outline: 'none', background: 'var(--bg-soft)', color: 'var(--text-dark)', fontSize: '1.1rem', fontWeight: 600, transition: '0.3s' }} />
                         </div>
                     </div>
                     
@@ -496,24 +497,24 @@ function BookAppointment() {
                             <p style={{ color: '#64748b', fontWeight: 500 }}>Try adjusting your specialty or search term.</p>
                         </div>
                     ) : (
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px', maxHeight: '500px', overflowY: 'auto', paddingRight: '10px', customScrollbar: 'true' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px', maxHeight: '500px', overflowY: 'auto', paddingRight: '10px' }}>
                             {doctorsList.filter(d => d.name.toLowerCase().includes(doctorSearch.toLowerCase())).map(doc => (
-                                <div key={doc._id} onClick={() => handleDoctorChange(doc)} style={{ padding: '24px', borderRadius: '24px', border: selectedDoctor?._id === doc._id ? '2.5px solid #3b82f6' : '1.5px solid #e2e8f0', background: selectedDoctor?._id === doc._id ? '#eff6ff' : '#fff', cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', position: 'relative', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                <div key={doc._id} onClick={() => handleDoctorChange(doc)} className={`pt-doc-card ${selectedDoctor?._id === doc._id ? 'active' : ''}`}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
                                         <div style={{ width: '64px', height: '64px', borderRadius: '20px', background: '#3b82f6', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.6rem', boxShadow: '0 8px 15px rgba(59,130,246,0.2)' }}>
                                             {doc.name.replace('Dr. ', '').charAt(0)}
                                         </div>
                                         <div>
-                                            <h4 style={{ fontWeight: 900, fontSize: '1.2rem', color: '#1e293b', margin: 0 }}>{doc.name}</h4>
+                                            <h4 style={{ fontWeight: 900, fontSize: '1.2rem', color: 'var(--text-dark)', margin: 0 }}>{doc.name}</h4>
                                             <p style={{ color: '#3b82f6', fontSize: '0.95rem', fontWeight: 900, marginTop: '2px' }}>{doc.specialization}</p>
                                         </div>
                                     </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px', paddingTop: '15px', borderTop: '1px solid #f1f5f9' }}>
-                                        <div style={{ color: '#64748b', fontSize: '0.9rem', fontWeight: 700 }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px', paddingTop: '15px', borderTop: '1px solid var(--border-color)' }}>
+                                        <div style={{ color: 'var(--text-gray)', fontSize: '0.9rem', fontWeight: 700 }}>
                                             <Clock size={16} style={{ verticalAlign: 'middle', marginRight: '6px' }} />
                                             {doc.experience} Years Exp.
                                         </div>
-                                        <span style={{ padding: '6px 14px', background: '#dcfce7', color: '#166534', borderRadius: '20px', fontWeight: 800, fontSize: '0.8rem' }}>Fast Booking</span>
+                                        <span style={{ padding: '6px 14px', background: 'var(--status-success-bg)', color: 'var(--status-success-text)', borderRadius: '20px', fontWeight: 800, fontSize: '0.8rem', border: '1px solid var(--status-success-text)' }}>Fast Booking</span>
                                     </div>
                                     {selectedDoctor?._id === doc._id && <div style={{ position: 'absolute', top: '20px', right: '20px' }}><CheckCircle2 color="#3b82f6" size={20} /></div>}
                                 </div>
@@ -530,30 +531,30 @@ function BookAppointment() {
 
 
             {step === 3 && bookingMode === "emergency" && emergencySlot && (
-                <div className="pt-card" style={{ animation: 'slideUp 0.5s', border: '3px solid #ef4444', background: '#fffcfc', borderRadius: '32px', padding: '50px' }}>
+                <div className="pt-card emergency-found-panel" style={{ animation: 'slideUp 0.5s', border: '3px solid #ef4444', background: 'rgba(239, 68, 68, 0.04)', borderRadius: '32px', padding: '50px' }}>
                     <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                        <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: '#fee2e2', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 25px', boxShadow: '0 15px 30px rgba(239,68,68,0.2)' }}>
+                        <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 25px', boxShadow: '0 15px 30px rgba(239,68,68,0.2)', border: '2px solid #ef4444' }}>
                             <Zap size={50} />
                         </div>
-                        <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#991b1b', marginBottom: '12px', letterSpacing: '-0.02em' }}>Instant Appointment Found</h2>
-                        <p style={{ color: '#b91c1c', fontWeight: 600, fontSize: '1.2rem' }}>We've assigned the earliest available static slot for immediate attention.</p>
+                        <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#ef4444', marginBottom: '12px', letterSpacing: '-0.02em' }}>Instant Appointment Found</h2>
+                        <p style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '1.2rem' }}>We've assigned the earliest available static slot for immediate attention.</p>
                     </div>
 
-                    <div style={{ background: '#fff', border: '2px solid #fee2e2', padding: '35px', borderRadius: '24px', marginBottom: '40px', boxShadow: '0 10px 25px rgba(0,0,0,0.03)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1.5px solid #fecaca', paddingBottom: '20px', marginBottom: '20px' }}>
-                            <span style={{ color: '#991b1b', fontWeight: 700, fontSize: '1.1rem' }}>Physician Assigned</span>
-                            <strong style={{ color: '#7f1d1d', fontSize: '1.25rem', fontWeight: 900 }}>{emergencySlot.doctor_name}</strong>
+                    <div className="pt-inner-card" style={{ background: 'var(--bg-white)', border: '2px solid rgba(239, 68, 68, 0.2)', padding: '35px', borderRadius: '24px', marginBottom: '40px', boxShadow: '0 10px 25px rgba(0,0,0,0.03)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1.5px solid rgba(239, 68, 68, 0.1)', paddingBottom: '20px', marginBottom: '20px' }}>
+                            <span style={{ color: '#ef4444', fontWeight: 700, fontSize: '1.1rem' }}>Physician Assigned</span>
+                            <strong style={{ color: 'var(--text-dark)', fontSize: '1.25rem', fontWeight: 900 }}>{emergencySlot.doctor_name}</strong>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1.5px solid #fecaca', paddingBottom: '20px', marginBottom: '20px' }}>
-                            <span style={{ color: '#991b1b', fontWeight: 700, fontSize: '1.1rem' }}>Expertise</span>
-                            <strong style={{ color: '#7f1d1d', fontSize: '1.2rem', fontWeight: 800 }}>{emergencySlot.specialization}</strong>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1.5px solid rgba(239, 68, 68, 0.1)', paddingBottom: '20px', marginBottom: '20px' }}>
+                            <span style={{ color: '#ef4444', fontWeight: 700, fontSize: '1.1rem' }}>Expertise</span>
+                            <strong style={{ color: 'var(--text-dark)', fontSize: '1.2rem', fontWeight: 800 }}>{emergencySlot.specialization}</strong>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1.5px solid #fecaca', paddingBottom: '20px', marginBottom: '20px' }}>
-                            <span style={{ color: '#991b1b', fontWeight: 700, fontSize: '1.1rem' }}>Reserved Date</span>
-                            <strong style={{ color: '#7f1d1d', fontSize: '1.2rem', fontWeight: 800 }}>{emergencySlot.date}</strong>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1.5px solid rgba(239, 68, 68, 0.1)', paddingBottom: '20px', marginBottom: '20px' }}>
+                            <span style={{ color: '#ef4444', fontWeight: 700, fontSize: '1.1rem' }}>Reserved Date</span>
+                            <strong style={{ color: 'var(--text-dark)', fontSize: '1.2rem', fontWeight: 800 }}>{emergencySlot.date}</strong>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ color: '#991b1b', fontWeight: 700, fontSize: '1.1rem' }}>Precise Arrival Time</span>
+                            <span style={{ color: '#ef4444', fontWeight: 700, fontSize: '1.1rem' }}>Precise Arrival Time</span>
                             <div style={{ background: '#ef4444', color: '#fff', padding: '8px 25px', borderRadius: '15px', fontSize: '1.8rem', fontWeight: 900, boxShadow: '0 8px 15px rgba(239,68,68,0.2)' }}>{emergencySlot.time}</div>
                         </div>
                     </div>
@@ -571,14 +572,14 @@ function BookAppointment() {
             {step === 4 && bookingMode === "standard" && (
                 <div className="pt-card" style={{ animation: 'slideUp 0.4s', borderRadius: '24px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '35px' }}>
-                        <div onClick={() => setStep(3)} style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: '0.2s' }}>
-                            <ChevronLeft size={20} />
+                        <div onClick={() => setStep(3)} style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'var(--bg-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: '0.2s', border: '1px solid var(--border-color)' }}>
+                            <ChevronLeft size={20} color="var(--text-dark)" />
                         </div>
-                        <h3 style={{ fontSize: '1.5rem', fontWeight: 900, margin: 0, color: '#0f172a' }}>Choose Arrival Time</h3>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: 900, margin: 0, color: 'var(--text-dark)' }}>Choose Arrival Time</h3>
                     </div>
 
                     <div onClick={() => dateInputRef.current?.showPicker()} style={{ marginBottom: '40px', cursor: 'pointer' }}>
-                        <label style={{ display: 'block', fontWeight: 800, marginBottom: '12px', color: '#1e293b', fontSize: '1.1rem' }}>Select Target Date</label>
+                        <label style={{ display: 'block', fontWeight: 800, marginBottom: '12px', color: 'var(--text-dark)', fontSize: '1.1rem' }}>Select Target Date</label>
                         <div style={{ position: 'relative', maxWidth: '400px' }}>
                             <input 
                                 ref={dateInputRef}
@@ -587,7 +588,6 @@ function BookAppointment() {
                                 min={new Date().toISOString().split("T")[0]}
                                 onChange={(e) => setSelectedDate(e.target.value)}
                                 className="pt-input"
-                                style={{ padding: '18px 18px 18px 54px', fontSize: '1.1rem', background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '16px', width: '100%', cursor: 'pointer' }}
                             />
                             <Calendar size={22} style={{ position: 'absolute', left: '18px', top: '50%', transform: 'translateY(-50%)', color: '#3b82f6' }} />
                         </div>
@@ -645,21 +645,19 @@ function BookAppointment() {
                                         key={idx}
                                         disabled={slot.is_full}
                                         onClick={() => setSelectedSlot(slot)}
+                                        className={`slot-chip ${selectedSlot?.time === slot.time ? 'active' : ''} ${slot.is_full ? 'full' : 'available'}`}
                                         style={{
                                             padding: '18px', borderRadius: '18px', fontWeight: 900, fontSize: '1.15rem',
                                             border: selectedSlot?.time === slot.time ? `3px solid #3b82f6` : '2px solid transparent',
-                                            background: slot.is_full ? '#f1f5f9' : selectedSlot?.time === slot.time ? '#eff6ff' : '#ecfdf5',
-                                            color: slot.is_full ? '#cbd5e1' : selectedSlot?.time === slot.time ? '#1d4ed8' : '#059669',
                                             cursor: slot.is_full ? 'not-allowed' : 'pointer',
                                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-                                            opacity: slot.is_full ? 0.6 : 1,
-                                            boxShadow: slot.is_full ? 'none' : '0 4px 10px rgba(16,185,129,0.1)',
+                                            opacity: slot.is_full ? 0.4 : 1,
                                             transform: selectedSlot?.time === slot.time ? 'scale(1.05)' : 'none'
                                         }}
                                     >
                                         {slot.time}
-                                        {slot.is_full && <div style={{ fontSize: '0.7rem', marginTop: '4px', fontWeight: 900, color: '#94a3b8' }}>BOOKED</div>}
-                                        {!slot.is_full && <div style={{ fontSize: '0.7rem', marginTop: '4px', fontWeight: 900, color: '#10b981' }}>OPEN</div>}
+                                        {slot.is_full && <div style={{ fontSize: '0.7rem', marginTop: '4px', fontWeight: 900, color: 'var(--text-muted)' }}>BOOKED</div>}
+                                        {!slot.is_full && <div style={{ fontSize: '0.7rem', marginTop: '4px', fontWeight: 900, color: 'inherit' }}>OPEN</div>}
                                     </button>
                                 ))}
                             </div>

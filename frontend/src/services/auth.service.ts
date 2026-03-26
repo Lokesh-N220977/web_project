@@ -124,6 +124,13 @@ export const getStoredUser = (): User | null => {
   }
 };
 
+export const getStoredSession = (): LoginResponse | null => {
+  const token = localStorage.getItem('token');
+  const user = getStoredUser();
+  if (!token || !user) return null;
+  return { access_token: token, user };
+};
+
 const authService = {
   sendOTP,
   verifyOTP,
@@ -139,6 +146,7 @@ const authService = {
   storeSession,
   clearSession,
   getStoredUser,
+  getStoredSession,
 };
 
 export default authService;

@@ -1,5 +1,5 @@
 import AdminLayout from "../../components/layout/admin/AdminLayout"
-import { Search, Loader2, Calendar, Edit2, CheckCircle2, X } from "lucide-react"
+import { Search, Loader2, Calendar, CheckCircle2, X } from "lucide-react"
 import { useState, useEffect, useCallback } from "react"
 import { getAllDoctors, getDoctorSchedules, saveDoctorSchedule } from "../../services/adminService"
 
@@ -171,7 +171,7 @@ function DoctorSchedules() {
                                         <th>Department</th>
                                         <th>Experience</th>
                                         <th>Status</th>
-                                        <th style={{ textAlign: 'right' }}>Actions</th>
+                                        <th style={{ textAlign: 'center', minWidth: '180px' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -202,13 +202,28 @@ function DoctorSchedules() {
                                                 </span>
                                             </td>
                                             <td>
-                                                <div className="ad-actions" style={{ justifyContent: 'flex-end' }}>
+                                                <div className="ad-actions" style={{ justifyContent: 'center' }}>
                                                     <button 
                                                         onClick={() => handleEditClick(doctor)}
                                                         className="ad-icon-btn" 
-                                                        style={{ background: '#2563eb', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '8px', display: 'flex', gap: '8px', fontWeight: 600 }}
+                                                        style={{ 
+                                                            background: 'linear-gradient(to right, #2563eb, #3b82f6)', 
+                                                            color: '#fff', 
+                                                            border: 'none', 
+                                                            padding: '10px 20px', 
+                                                            borderRadius: '12px', 
+                                                            display: 'flex', 
+                                                            alignItems: 'center',
+                                                            gap: '10px', 
+                                                            fontWeight: 700,
+                                                            fontSize: '0.85rem',
+                                                            boxShadow: '0 4px 12px rgba(37, 99, 235, 0.2)',
+                                                            cursor: 'pointer',
+                                                            transition: 'all 0.3s ease',
+                                                            width: 'fit-content'
+                                                        }}
                                                     >
-                                                        <Edit2 size={16} /> Manage Schedule
+                                                        <Calendar size={18} /> Manage Schedule
                                                     </button>
                                                 </div>
                                             </td>

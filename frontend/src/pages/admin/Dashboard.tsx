@@ -66,10 +66,21 @@ function AdminDashboard() {
     ]
 
     // Prep charts data
-    const pieData = stats?.status_distribution ? Object.entries(stats.status_distribution).map(([name, value]) => ({ 
-        name: name.charAt(0).toUpperCase() + name.slice(1), 
-        value 
-    })) : [];
+    const pieData = stats?.status_distribution ? Object.entries(stats.status_distribution).reduce((acc: any[], [name, value]: [string, any]) => {
+        // Normalize name: lowercase and trim, then capitalize first letter
+        const normalizedName = name.trim().toLowerCase();
+        let finalName = normalizedName.charAt(0).toUpperCase() + normalizedName.slice(1);
+        
+        // If we have both 'booked' and another status that should be 'pending', we might need to handle it.
+        // For now, let's just group by normalized name to fix the 'booked' vs 'BOOKED' issue.
+        const existing = acc.find(item => item.name === finalName);
+        if (existing) {
+            existing.value += value;
+        } else {
+            acc.push({ name: finalName, value });
+        }
+        return acc;
+    }, []) : [];
 
     const PIE_COLORS = ['var(--primary)', '#10b981', '#8b5cf6', '#f43f5e', '#0ea5e9'];
 

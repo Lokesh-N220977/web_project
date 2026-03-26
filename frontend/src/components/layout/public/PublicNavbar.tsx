@@ -27,7 +27,10 @@ const PublicNavbar: React.FC = () => {
                 {/* Brand / Logo */}
                 <Link to="/" className="navbar-brand" onClick={() => setOpen(false)}>
                     <img src={logo} alt="MedicPulse Logo" />
-                    <span>MedicPulse</span>
+                    <span className="ps-logo-text">
+                        <span style={{ color: 'var(--text-dark)' }}>Medic</span>
+                        <span style={{ background: 'linear-gradient(to right, #10b981, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Pulse</span>
+                    </span>
                 </Link>
 
                 {/* Mobile Overlay */}

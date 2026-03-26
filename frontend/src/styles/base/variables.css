@@ -102,27 +102,22 @@ html {
     100% { transform: translateY(0); opacity: 1; }
 }
 
-/* --- NEW PREMIUM DARK MODE SYSTEM --- */
-:root.dark {
-    /* Base Dark Palette (Deep & Immersive) */
-    --bg-white: rgba(7, 10, 19, 0.85);   /* Translucent Obsidian */
-    --bg-light: #02040a;                /* Pure Deep Navy */
-    --bg-soft: #0a0f1d;                 /* Midnight Slate */
+/* --- NEW PREMIUM CYBER-TECH DARK MODE SYSTEM (Neon Glass UI) --- */
+:root.dark, .dark {
+    /* Cyber Tech Obsidian Palette */
+    --bg-white: rgba(15, 23, 42, 0.45);   /* HIGH TRANSPARENCY GLASS */
+    --bg-light: #020617;                /* Pure Midnight Navy */
+    --bg-soft: #0f172a;                 /* Slate Night */
     
     --text-dark: #f8fafc;               /* Crisp White */
     --text-main: #cbd5e1;               /* Soft Blue Gray */
     --text-gray: #94a3b8;               /* Muted Steel */
-    --text-muted: #475569;              /* Dark Slate */
+    --text-muted: #64748b;              /* Dark Slate */
 
     --border-color: rgba(255, 255, 255, 0.08);
     --border-light: rgba(255, 255, 255, 0.04);
     
-    /* Common Action Colors (Adjusted for Dark Mode) */
-    --action-success: #10b981;
-    --action-danger: #ef4444;
-    --action-warning: #f59e0b;
-
-    /* Status Colors Dark - Vibrant & Readable */
+    /* Cyber Preservations */
     --status-success-bg: rgba(16, 185, 129, 0.12);
     --status-success-text: #34d399;
     --status-warning-bg: rgba(245, 158, 11, 0.12);
@@ -130,142 +125,154 @@ html {
     --status-error-bg: rgba(239, 68, 68, 0.12);
     --status-error-text: #f87171;
 
-    /* Glassmorphism Presets */
-    --glass-bg: rgba(15, 23, 42, 0.8);
+    /* Immersive Cyber-Glass */
+    --glass-bg: rgba(15, 23, 42, 0.4);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-filter: blur(20px) saturate(180%);
+    --glass-filter: blur(25px) saturate(180%);
     
+    /* Portal Specific Neon Accents */
+    --patient-accent: #3b82f6;           /* Cyber Blue */
+    --patient-neon: #00f2ff;            /* Blue Neon Glow */
+    --patient-hover: #a855f7;           /* Violet Spark */
+    
+    --doctor-accent: #10b981;           /* Cyber Green */
+    --doctor-neon: #39ff14;             /* Green Neon Glow */
+    --doctor-hover: #3b82f6;            /* Blue Spark */
+    
+    --admin-accent-1: #10b981;
+    --admin-accent-2: #3b82f6;
+    --admin-neon: linear-gradient(135deg, #10b981, #3b82f6);
+
+    --neon-purple: #a855f7;
+    --neon-amber: #f59e0b;
+    --neon-pink: #ff2d55;
+
     /* Input & Component Tokens */
-    --card-bg: rgba(15, 23, 42, 0.6);
-    --input-bg: rgba(2, 6, 23, 0.8);
-    --dropdown-bg: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.35);
+    --input-bg: rgba(2, 6, 23, 0.5);
+    --dropdown-bg: rgba(15, 23, 42, 0.9);
+
+    /* Cyber Background Pattern */
+    --cyber-grid: radial-gradient(circle, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+    --cyber-mesh: linear-gradient(rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.98));
+
+    /* Scrollbar Dark Overrides */
+    --sb-track: rgba(15, 23, 42, 0.6);
+    
+    /* Neon Shadow/Blur effects */
+    --neon-glow-blue: 0 0 15px rgba(59, 130, 246, 0.4);
+    --neon-glow-green: 0 0 15px rgba(16, 185, 129, 0.4);
+    --neon-glow-red: 0 0 15px rgba(239, 68, 68, 0.4);
+    --neon-glow-purple: 0 0 15px rgba(168, 85, 247, 0.4);
+    --neon-glow-amber: 0 0 15px rgba(245, 158, 11, 0.4);
 }
 
-/* --- PATIENT PORTAL (BLUE PRIORITY) --- */
-.dark.patient-portal {
-    --primary: #3b82f6;           /* Vivid Blue */
-    --primary-light: rgba(59, 130, 246, 0.15);
-    --primary-hover: #60a5fa;
-    --primary-dark: #2563eb;
-    
-    --grad-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    --grad-vibrant: linear-gradient(135deg, #3b82f6, #6366f1, #0ea5e9);
-    --glow-primary: 0 0 20px rgba(59, 130, 246, 0.3);
-    
-    --glass-border: rgba(59, 130, 246, 0.2);
-    --sb-thumb: linear-gradient(to bottom, #3b82f6, #0ea5e9);
+/* --- GLOBAL DARK LAYOUT (CYBER GRID) --- */
+.dark, .pl-wrapper.dark, .dr-sidebar-theme.dark, .ad-layout-dark {
+    background-color: var(--bg-light) !important;
+    background-image: var(--cyber-grid), var(--cyber-mesh) !important;
+    background-size: 30px 30px, 100% 100% !important;
+    color: var(--text-main) !important;
 }
 
-/* --- DOCTOR PORTAL (GREEN PRIORITY) --- */
-.dark.doctor-portal {
-    --primary: #10b981;           /* Emerald Green */
-    --primary-light: rgba(16, 185, 129, 0.15);
-    --primary-hover: #34d399;
-    --primary-dark: #059669;
-    
-    --grad-primary: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    --grad-vibrant: linear-gradient(135deg, #10b981, #06b6d4, #14b8a6);
-    --glow-primary: 0 0 20px rgba(16, 185, 129, 0.3);
-    
-    --glass-border: rgba(16, 185, 129, 0.2);
-    --sb-thumb: linear-gradient(to bottom, #10b981, #06b6d4);
-}
-
-/* --- ADMIN PORTAL (GREEN & BLUE PRIORITY) --- */
-.dark.admin-portal {
-    --primary: #8b5cf6;           /* Electric Violet Base */
-    --primary-light: rgba(139, 92, 246, 0.15);
-    --primary-hover: #a78bfa;
-    
-    /* The Signature Admin Mix: Green + Blue + Violet */
-    --admin-blue: #3b82f6;
-    --admin-green: #10b981;
-    --admin-violet: #8b5cf6;
-    
-    --grad-primary: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
-    --grad-vibrant: linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6);
-    --glow-primary: 0 0 25px rgba(59, 130, 246, 0.4);
-    
-    --glass-border: rgba(99, 102, 241, 0.25);
-    --glass-filter: blur(25px) saturate(210%);
-    --sb-thumb: linear-gradient(to bottom, #10b981, #3b82f6, #8b5cf6);
-}
-
-/* Base Body Styles for Dark Theme */
-.dark body {
-    background-color: var(--bg-light);
-    color: var(--text-main);
-}
-
-/* Sidebar Dark Mode - Integrated with Portal Themes */
-.dark .patient-sidebar, 
-.dark .doctor-sidebar,
-.dark .admin-sidebar {
-    background: var(--bg-soft) !important;
+/* Sidebar & Navbar Cyber-Glass */
+.dark .patient-sidebar, .dark .doctor-sidebar, .dark .admin-sidebar, .dark .pn-navbar {
+    background: rgba(15, 23, 42, 0.4) !important;
     backdrop-filter: var(--glass-filter) !important;
     border-right: 1px solid var(--glass-border) !important;
 }
 
-.dark .ps-logo-text { color: var(--primary) !important; text-shadow: var(--glow-primary); }
-.dark .ps-user { background: var(--bg-white) !important; border: 1px solid var(--glass-border) !important; }
-.dark .ps-link { color: var(--text-gray) !important; }
-.dark .ps-link-active, .dark .ps-link:hover {
-    background: var(--primary-light) !important;
-    color: var(--primary) !important;
-    border-left: 3px solid var(--primary) !important;
-}
-
-/* Navbar Dark Mode */
-.dark .pn-navbar,
-.dark .admin-navbar,
-.dark .doctor-navbar {
-    background: var(--bg-white) !important;
-    backdrop-filter: var(--glass-filter) !important;
+.dark .pn-navbar {
     border-bottom: 1px solid var(--glass-border) !important;
 }
 
-.dark .pn-page-title { color: var(--text-dark) !important; }
-.dark .pn-breadcrumb { color: var(--text-muted) !important; }
-.dark .pn-search { background: var(--input-bg) !important; border-color: var(--glass-border) !important; }
-.dark .pn-search-input { color: var(--text-main) !important; }
+.dark .pn-navbar svg { color: var(--text-dark) !important; }
+.dark .pn-search { background: rgba(0, 0, 0, 0.2) !important; border: 1px solid var(--glass-border) !important; }
+.dark .pn-profile, .dark .pn-dropdown { background: rgba(15, 23, 42, 0.8) !important; backdrop-filter: var(--glass-filter) !important; border: 1px solid var(--glass-border) !important; }
 
-/* Global UI Components in Dark Mode - Glassmorphism Transition */
-.dark .pd-card {
-    background: var(--glass-bg) !important;
+/* Portal Hover Patterns */
+.dark .patient-portal .pn-dropdown-item:hover, 
+.dark .patient-sidebar .ps-link:hover { background: rgba(168, 85, 247, 0.1) !important; color: #a855f7 !important; }
+
+.dark .doctor-portal .pn-dropdown-item:hover, 
+.dark .doctor-sidebar .ds-link:hover { background: rgba(59, 130, 246, 0.1) !important; color: #3b82f6 !important; }
+
+/* Global Card & Component Transparency */
+.dark .pd-card, .dark .ps-user-premium, .dark .pd-premium-modal, .dark .ba-type-card, .dark .ba-specialization-badge, .dark .as-stat-card, .dark .pd-stat-card, .dark .ma-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--glass-border) !important;
     backdrop-filter: var(--glass-filter) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+    transition: var(--transition) !important;
+}
+
+.dark .pd-card:hover, .dark .pd-stat-card:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-5px) scale(1.01) !important;
+}
+
+/* Stat Icon Boxes - PORTAL SENSITIVE */
+.dark .patient-portal .as-icon-box, .dark .patient-portal .stat-icon-wrapper {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: var(--patient-accent) !important;
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+    box-shadow: var(--neon-glow-blue) !important;
+}
+
+.dark .doctor-portal .as-icon-box, .dark .doctor-portal .stat-icon-wrapper {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: var(--doctor-accent) !important;
+    border: 1px solid rgba(16, 185, 129, 0.2) !important;
+    box-shadow: var(--neon-glow-green) !important;
+}
+
+/* Buttons & Selectors - TRANSPARENT OVERRIDES */
+.dark .ba-spec-btn, .dark .ba-doctor-card, .dark [class*="selectable-card"] {
+    background: rgba(15, 23, 42, 0.3) !important;
     border: 1px solid var(--glass-border) !important;
 }
 
-.dark .pd-input {
-    background: var(--input-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    color: var(--text-main) !important;
+.dark .ba-spec-btn.active, .dark .ba-doctor-card.active {
+    background: rgba(59, 130, 246, 0.12) !important;
+    border: 1px solid var(--patient-accent) !important;
+    color: var(--patient-accent) !important;
+    box-shadow: var(--neon-glow-blue) !important;
 }
 
-.dark .ad-btn-primary {
-    background: var(--primary) !important;
-    box-shadow: var(--glow-primary);
-}
-.dark h1, .dark h2, .dark .pd-page-title {
+/* Chevron & Small Control Boxes - DARK BACKGROUND (Replacing White) */
+.dark [class*="chevron"], .dark [class*="control-box"], .dark .ba-back-btn {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid var(--glass-border) !important;
     color: var(--text-dark) !important;
 }
 
-.dark h3, .dark h4, .dark .pd-card-subtitle {
-    color: var(--primary) !important;
+/* Specific Common Colors preservation */
+.dark .status-pending { background: rgba(245, 158, 11, 0.12) !important; color: #fbbf24 !important; }
+.dark .status-confirmed { background: rgba(16, 185, 129, 0.12) !important; color: #10b981 !important; box-shadow: var(--neon-glow-green) !important; }
+.dark .status-cancelled, .dark .status-rejected { background: rgba(239, 68, 68, 0.12) !important; color: #f87171 !important; box-shadow: var(--neon-glow-red) !important; }
+
+/* Logout Identity - RED GLASS PRRESERVATION */
+.dark .ps-logout-btn, .dark .pn-dropdown-danger, .dark .pd-tab-danger {
+    background: rgba(239, 68, 68, 0.08) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.15) !important;
+}
+.dark .ps-logout-btn:hover { background: rgba(239, 68, 68, 0.15) !important; color: #ef4444 !important; }
+
+/* Neon Headings */
+.dark .patient-portal h1, .dark .patient-portal h2, .dark .patient-portal h3 {
+    color: var(--patient-accent) !important;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.3) !important;
+}
+.dark .doctor-portal h1, .dark .doctor-portal h2, .dark .doctor-portal h3 {
+    color: var(--doctor-accent) !important;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.3) !important;
 }
 
-.dark p, .dark span:not(.ps-badge) {
-    color: var(--text-main);
+/* Color Shift: Black -> White for normal text */
+.dark p, .dark label, .dark .pn-page-title, .dark .pn-name, .dark .ps-link-label {
+    color: var(--text-dark) !important;
 }
-
-.dark .pd-input, .dark .pd-textarea, .dark .pd-select {
-    background: var(--input-bg) !important;
-    border: 1px solid var(--glass-border) !important;
-    color: var(--text-main) !important;
-}
-
-.dark .pd-alert-success { background: var(--status-success-bg) !important; color: var(--status-success-text) !important; border: 1px solid var(--status-success-text) !important; }
-.dark .pd-alert-error { background: var(--status-error-bg) !important; color: var(--status-error-text) !important; border: 1px solid var(--status-error-text) !important; }
 
 /* Font Size Scaling (Scoped to pl-wrapper for layout safety) */
 .pl-wrapper.font-size-large { font-size: 18px !important; }

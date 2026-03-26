@@ -5,6 +5,7 @@ uvicorn==0.42.0
 # Database & Async Drivers
 motor==3.7.1
 pymongo==4.16.0
+dnspython==2.8.0
 
 # Authentication & Security
 passlib[bcrypt]==1.7.4

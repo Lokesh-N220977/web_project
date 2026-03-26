@@ -74,6 +74,11 @@ class DynamicSlotService:
         b_start = parse_time(break_start) if break_start else None
         b_end = parse_time(break_end) if break_end else None
 
+        # Check if the requested date is today
+        now = datetime.now()
+        is_today = date_str == now.strftime("%Y-%m-%d")
+        current_time_str = now.strftime("%H:%M")
+
         slots = []
         current = start
 
@@ -86,8 +91,14 @@ class DynamicSlotService:
                     current += timedelta(minutes=slot_duration)
                     continue
 
+            # NEW: Filter out past slots if today
+            if is_today and slot_time < current_time_str:
+                current += timedelta(minutes=slot_duration)
+                continue
+
             # Count bookings for this slot
             booked_count = 0
+            # ... (rest of the logic)
             for appt in appointments:
                 appt_time = appt.get("slot_time") or appt.get("time")
                 if not appt_time and appt.get("slot_start") and isinstance(appt["slot_start"], datetime):

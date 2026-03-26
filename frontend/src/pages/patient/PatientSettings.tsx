@@ -29,8 +29,6 @@ function PatientSettings() {
         reminder_time_minutes: 60
     })
 
-    // Font State (managed locally for real-time update)
-    const [fontSize, setFontSizeState] = useState(localStorage.getItem('patient-font-size') || 'Normal')
 
     const tabs = [
         { id: "security", label: "Security", icon: <Shield size={18} /> },
@@ -76,13 +74,6 @@ function PatientSettings() {
         } catch (err) { setError("Failed to sync settings") }
     }
 
-    const handleFontSizeChange = (val: string) => {
-        setFontSizeState(val);
-        localStorage.setItem('patient-font-size', val);
-        window.dispatchEvent(new Event('patient-prefs-changed')); // Notify layout
-        setSuccess("Font size updated!");
-        setTimeout(() => setSuccess(""), 2000);
-    }
 
     return (
         <PatientLayout>
@@ -202,14 +193,6 @@ function PatientSettings() {
                                                 <Moon size={18} /> Dark
                                             </button>
                                         </div>
-                                    </div>
-                                    <div className="pd-field" style={{ marginTop: '20px' }}>
-                                        <label>Font Size</label>
-                                        <select className="pd-input" value={fontSize} onChange={e => handleFontSizeChange(e.target.value)}>
-                                            <option>Normal</option>
-                                            <option>Large</option>
-                                            <option>Extra Large</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>

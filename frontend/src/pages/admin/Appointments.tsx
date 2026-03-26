@@ -102,19 +102,19 @@ function Appointments() {
                                     <th>Assigned Specialist</th>
                                     <th>Schedule</th>
                                     <th>Status</th>
-                                    <th style={{ textAlign: 'right' }}>Actions</th>
+                                    <th style={{ textAlign: 'right' }}>Reference ID</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan={6} style={{ textAlign: 'center', padding: '100px 0' }}>
+                                        <td colSpan={5} style={{ textAlign: 'center', padding: '100px 0' }}>
                                             <Loader2 className="animate-spin" size={32} style={{ color: 'var(--primary)', margin: '0 auto' }} />
                                         </td>
                                     </tr>
                                 ) : appointments.length === 0 ? (
                                     <tr>
-                                        <td colSpan={6} style={{ textAlign: 'center', padding: '100px 0', color: 'var(--text-muted)' }}>
+                                        <td colSpan={5} style={{ textAlign: 'center', padding: '100px 0', color: 'var(--text-muted)' }}>
                                             <CalendarDays size={48} style={{ opacity: 0.2, margin: '0 auto 15px' }} />
                                             <p>No appointments found matching your criteria.</p>
                                         </td>
@@ -162,30 +162,8 @@ function Appointments() {
                                                 </span>
                                             </td>
                                             <td>
-                                                <div className="ad-actions" style={{ justifyContent: 'flex-end' }}>
-                                                    {apt.status === "booked" && (
-                                                        <>
-                                                            <button 
-                                                                className="ad-btn-success" 
-                                                                title="Mark Completed" 
-                                                                style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px' }}
-                                                                onClick={() => handleComplete(apt._id)}
-                                                                disabled={actionLoading === apt._id}
-                                                            >
-                                                                <CheckCircle size={16} />
-                                                            </button>
-                                                            <button 
-                                                                className="ad-btn-danger" 
-                                                                title="Cancel Booking" 
-                                                                style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px' }}
-                                                                onClick={() => handleCancel(apt._id)}
-                                                                disabled={actionLoading === apt._id}
-                                                            >
-                                                                <Trash2 size={16} />
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                    {actionLoading === apt._id && <Loader2 className="animate-spin" size={16} />}
+                                                <div style={{ textAlign: 'right', fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
+                                                    #{apt._id?.slice(-8).toUpperCase()}
                                                 </div>
                                             </td>
                                         </tr>

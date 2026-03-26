@@ -6,6 +6,7 @@ import { ShieldAlert, CheckCircle, Loader2, Lock } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import api from "../../../services/api"
 import { useTheme } from "../../../hooks/useTheme"
+import "../../../styles/pages/doctor.css"
 
 type Props = {
   children: React.ReactNode

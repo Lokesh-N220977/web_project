@@ -91,7 +91,7 @@ export default function NotificationDropdown() {
         aria-label="Notifications"
         style={{ background: 'none', border: 'none', cursor: 'pointer', position: 'relative', padding: '8px' }}
       >
-        <Bell size={20} className={unreadCount > 0 ? "text-primary" : "text-gray-500"} />
+        <Bell size={20} style={{ color: unreadCount > 0 ? 'var(--primary)' : 'var(--text-dark)' }} />
         {unreadCount > 0 && (
           <span className="pn-bell-dot" style={{
             position: 'absolute', top: '4px', right: '4px', 
@@ -113,21 +113,23 @@ export default function NotificationDropdown() {
           marginTop: '8px',
           width: '320px',
           maxHeight: '400px',
-          backgroundColor: 'white',
-          borderRadius: '8px',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05)',
+          backgroundColor: 'var(--dropdown-bg, var(--bg-white))',
+          borderRadius: '16px',
+          boxShadow: 'var(--shadow-xl)',
           zIndex: 50,
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
-          border: '1px solid #e5e7eb'
+          border: '1px solid var(--glass-border)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid #e5e7eb', backgroundColor: '#f9fafb' }}>
-            <h3 style={{ margin: 0, fontSize: '14px', fontWeight: '600', color: '#111827' }}>Notifications</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', borderBottom: '1px solid var(--glass-border)', backgroundColor: 'rgba(59, 130, 246, 0.05)' }}>
+            <h3 style={{ margin: 0, fontSize: '15px', fontWeight: '900', color: 'var(--text-dark)', letterSpacing: '0.02em' }}>Notifications</h3>
             {unreadCount > 0 && (
               <button 
                 onClick={markAllAsRead} 
-                style={{ background: 'none', border: 'none', color: '#2563eb', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                style={{ background: 'none', border: 'none', color: 'var(--primary)', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: '700' }}
               >
                 <CheckCheck size={14} /> Mark all read
               </button>
@@ -136,59 +138,59 @@ export default function NotificationDropdown() {
           
           <div style={{ overflowY: 'auto', flex: 1 }}>
             {loading && notifications.length === 0 ? (
-              <div style={{ padding: '20px', textAlign: 'center', color: '#6b7280', fontSize: '14px' }}>Loading...</div>
+              <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '14px' }}>Loading...</div>
             ) : notifications.length === 0 ? (
-              <div style={{ padding: '30px 20px', textAlign: 'center', color: '#6b7280', fontSize: '14px' }}>
+              <div style={{ padding: '30px 20px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '14px' }}>
                 <Bell size={32} style={{ margin: '0 auto 10px', opacity: 0.2 }} />
                 No notifications yet
               </div>
             ) : (
               notifications.map((notif) => (
-                <div 
-                  key={notif.id} 
-                  style={{ 
-                    padding: '12px 16px', 
-                    borderBottom: '1px solid #f3f4f6', 
-                    backgroundColor: notif.is_read ? 'white' : '#eff6ff',
-                    transition: 'background-color 0.2s'
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      {!notif.is_read && <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#3b82f6', flexShrink: 0 }} />}
-                      <span style={{ fontSize: '14px', fontWeight: notif.is_read ? '500' : '600', color: '#111827' }}>
-                        {notif.title}
-                      </span>
-                    </div>
+                  <div 
+                    key={notif.id} 
+                    style={{ 
+                      padding: '14px 18px', 
+                      borderBottom: '1px solid var(--glass-border)', 
+                      backgroundColor: notif.is_read ? 'transparent' : 'rgba(59, 130, 246, 0.08)',
+                      transition: 'background-color 0.2s'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        {!notif.is_read && <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#3b82f6', flexShrink: 0, boxShadow: '0 0 10px rgba(59, 130, 246, 0.4)' }} />}
+                        <span style={{ fontSize: '14px', fontWeight: notif.is_read ? '700' : '900', color: 'var(--text-dark)' }}>
+                          {notif.title}
+                        </span>
+                      </div>
                     {!notif.is_read && (
                       <button 
                         onClick={(e) => markAsRead(e, notif.id)}
-                        style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer', padding: '2px' }}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '2px' }}
                         title="Mark as read"
                       >
                         <Check size={14} />
                       </button>
                     )}
                   </div>
-                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#4b5563', lineHeight: '1.4', paddingLeft: notif.is_read ? '0' : '16px' }}>
-                    {notif.message}
-                  </p>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', paddingLeft: notif.is_read ? '0' : '16px' }}>
-                    {formatDate(notif.created_at)}
-                  </span>
+                    <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: 'var(--text-main)', lineHeight: '1.5', paddingLeft: notif.is_read ? '0' : '16px' }}>
+                      {notif.message}
+                    </p>
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', paddingLeft: notif.is_read ? '0' : '16px', fontWeight: '500' }}>
+                      {formatDate(notif.created_at)}
+                    </span>
                 </div>
               ))
             )}
           </div>
           
-          <div style={{ padding: '8px', borderTop: '1px solid #e5e7eb', backgroundColor: '#f9fafb', textAlign: 'center' }}>
+          <div style={{ padding: '8px', borderTop: '1px solid var(--glass-border)', backgroundColor: 'rgba(59, 130, 246, 0.03)', textAlign: 'center' }}>
             <button 
               onClick={() => { 
                 setIsOpen(false); 
                 const role = user?.role || 'patient';
                 navigate(`/${role}/notifications`); 
               }}
-              style={{ background: 'none', border: 'none', color: '#4b5563', fontSize: '12px', cursor: 'pointer', width: '100%', padding: '4px' }}
+              style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '12px', cursor: 'pointer', width: '100%', padding: '6px', fontWeight: '700' }}
             >
               View all
             </button>

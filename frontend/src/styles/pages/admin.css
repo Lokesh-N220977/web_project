@@ -545,14 +545,11 @@
 }
 
 /* =============================================
-   DARK MODE OVERRIDES FOR ADMIN PORTAL (PREMIUM)
-============================================= */
-/* =============================================
-   DARK MODE OVERRIDES FOR ADMIN PORTAL (PREMIUM)
+   DARK MODE OVERRIDES FOR ADMIN PORTAL (PREMIUM NEON GLASS)
 ============================================= */
 .admin-wrapper.dark {
   background-color: var(--bg-light);
-  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent),
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent),
               radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.1), transparent),
               var(--bg-light) !important;
   color: var(--text-main);
@@ -561,45 +558,49 @@
 
 .admin-wrapper.dark .ad-card,
 .admin-wrapper.dark .pd-card,
-.admin-wrapper.dark .ad-list-container {
+.admin-wrapper.dark .ad-list-container,
+.admin-wrapper.dark .ad-stat-card,
+.admin-wrapper.dark .ad-modal-content {
   background: var(--glass-bg) !important;
   backdrop-filter: var(--glass-filter) !important;
   border: 1px solid var(--glass-border) !important;
-  box-shadow: var(--shadow-xl) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
 }
 
-.admin-wrapper.dark .ad-stat-card {
-  background: var(--glass-bg) !important;
-  backdrop-filter: var(--glass-filter) !important;
-  border: 1px solid var(--glass-border) !important;
-  box-shadow: var(--shadow-md) !important;
+.admin-wrapper.dark .ad-card:hover, .admin-wrapper.dark .ad-stat-card:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-5px) !important;
 }
 
 .admin-wrapper.dark .ad-header-content h1 {
-  background: var(--grad-vibrant);
+  background: var(--admin-neon);
   -webkit-background-clip: text;
   background-clip: text;
+  color: transparent !important;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.2) !important;
 }
 
 .admin-wrapper.dark .ad-table th {
-  background: rgba(30, 41, 59, 0.5) !important;
-  color: var(--admin-secondary) !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+  color: var(--text-muted) !important;
   border-bottom: 2px solid var(--glass-border) !important;
 }
 
 .admin-wrapper.dark .ad-table td {
-  border-bottom: 1px solid var(--border-light) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
   color: var(--text-main) !important;
 }
 
 .admin-wrapper.dark .ad-table tbody tr:hover {
-  background: var(--primary-light) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  box-shadow: inset 3px 0 0 var(--doctor-accent) !important;
 }
 
 .admin-wrapper.dark .ad-input,
 .admin-wrapper.dark .pd-input,
 .admin-wrapper.dark .ad-filter-select,
-.admin-wrapper.dark .ad-search-bar {
+.admin-wrapper.dark .ad-search-bar,
+.admin-wrapper.dark .ad-input-premium {
   background: var(--input-bg) !important;
   border: 1px solid var(--glass-border) !important;
   color: var(--text-dark) !important;
@@ -607,17 +608,19 @@
 }
 
 .admin-wrapper.dark .ad-input:focus,
-.admin-wrapper.dark .pd-input:focus {
-  border-color: var(--primary) !important;
-  box-shadow: var(--glow-primary) !important;
+.admin-wrapper.dark .pd-input:focus,
+.admin-wrapper.dark .ad-filter-select:focus,
+.admin-wrapper.dark .ad-input-premium:focus {
+  border-color: var(--admin-accent-2) !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
 }
 
 /* Status Badges Dark */
-.admin-wrapper.dark .ad-status--active { background: var(--status-success-bg); color: var(--status-success-text); }
-.admin-wrapper.dark .ad-status--booked { background: var(--status-success-bg); color: var(--status-success-text); }
-.admin-wrapper.dark .ad-status--pending { background: var(--status-warning-bg); color: var(--status-warning-text); }
-.admin-wrapper.dark .ad-status--cancelled { background: var(--status-error-bg); color: var(--status-error-text); }
-.admin-wrapper.dark .ad-status--deleted { background: var(--status-error-bg); color: var(--status-error-text); }
+.admin-wrapper.dark .ad-status--active { background: rgba(16, 185, 129, 0.15) !important; color: #34d399 !important; }
+.admin-wrapper.dark .ad-status--booked { background: rgba(59, 130, 246, 0.15) !important; color: #3b82f6 !important; }
+.admin-wrapper.dark .ad-status--pending { background: rgba(245, 158, 11, 0.15) !important; color: #fbbf24 !important; }
+.admin-wrapper.dark .ad-status--cancelled, .admin-wrapper.dark .ad-status--deleted { background: rgba(239, 68, 68, 0.15) !important; color: #f87171 !important; }
+
 /* =============================================
    ADMIN DOCTOR PROFILE / EDIT STYLES
 ============================================= */

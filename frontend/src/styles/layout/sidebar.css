@@ -92,5 +92,82 @@
 .ps-nav {
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #3b82f6 transparent;
+}
+
+.dr-sidebar-theme .ps-nav {
+    scrollbar-color: #10b981 rgba(0,0,0,0.03);
+}
+
+/* --- DOCTOR SIDEBAR CUSTOM THEME --- */
+/* Hover: Blue Text */
+.dr-sidebar-theme .ps-link:hover {
+    background: rgba(59, 130, 246, 0.08);
+    color: #3b82f6 !important;
+}
+
+.dr-sidebar-theme .ps-link:hover .ps-link-icon-wrap svg {
+    color: #3b82f6 !important;
+}
+
+/* Active: Green Text & Subtle Background */
+.dr-sidebar-theme .ps-link-active {
+    background: rgba(16, 185, 129, 0.1) !important;
+    color: #10b981 !important;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1) !important;
+}
+
+.dr-sidebar-theme .ps-link-active .ps-link-icon-wrap svg {
+    color: #10b981 !important;
+}
+
+/* Dark Mode Doctor */
+.dark .dr-sidebar-theme .ps-link:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa !important;
+}
+
+.dark .dr-sidebar-theme .ps-link-active {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important;
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* --- ADMIN SIDEBAR CUSTOM THEME --- */
+/* Hover: Green & Violet Mix Gradient Text */
+.ad-sidebar-theme .ps-link:hover {
+    background: rgba(139, 92, 246, 0.08);
+}
+
+.ad-sidebar-theme .ps-link:hover span {
+    background: linear-gradient(135deg, #10b981, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.ad-sidebar-theme .ps-link:hover svg {
+    color: #8b5cf6;
+}
+
+/* Active: Professional Deep Violet Gradient with White Text */
+.ad-sidebar-theme .ps-link-active {
+    background: linear-gradient(135deg, #10b981, #7c3aed) !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25) !important;
+}
+
+.ad-sidebar-theme .ps-link-active svg {
+    color: #ffffff !important;
+}
+
+/* Dark Mode Admin */
+.dark .ad-sidebar-theme .ps-link:hover {
+    background: rgba(139, 92, 246, 0.12);
+}
+
+.dark .ad-sidebar-theme .ps-link-active {
+    background: linear-gradient(135deg, #059669, #6d28d9) !important;
+    color: #ffffff !important;
 }

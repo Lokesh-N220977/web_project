@@ -32,8 +32,8 @@ const DoctorNavbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
           <Menu size={22} />
         </button>
         <div className="pn-title-wrap">
-          <h1 className="pn-page-title">Doctor Portal</h1>
-          <p className="pn-breadcrumb">MedicPulse &rsaquo; Welcome Back</p>
+          <h1 className="pn-page-title text-primary-gradient" style={{ fontSize: '1.4rem', fontWeight: 800 }}>Doctor Portal</h1>
+          <p className="pn-breadcrumb" style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.8 }}>MedicPulse Hospital &rsaquo; Welcome Back</p>
         </div>
       </div>
 
@@ -41,11 +41,11 @@ const DoctorNavbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
         <NotificationDropdown />
 
         <div className="pn-profile" onClick={() => setShowDropdown(!showDropdown)} ref={dropdownRef}>
-          <div className="pn-avatar" style={{ background: 'linear-gradient(135deg, #0dcb6e, #0ba358)' }}>
+          <div className="pn-avatar pn-avatar-dynamic">
             {(user?.name || "D")[0].toUpperCase()}
           </div>
           <div className="pn-profile-info">
-            <span className="pn-name">{user?.name || "Doctor"}</span>
+            <span className="pn-name pn-name-colorful">{user?.name ? (user.name.startsWith('Dr.') ? user.name : `Dr. ${user.name}`) : "Doctor"}</span>
             <span className="pn-role">{(user as any)?.specialization || "Practitioner"}</span>
           </div>
           <ChevronDown size={16} className={`pn-chevron${showDropdown ? " pn-chevron-open" : ""}`} />

@@ -68,12 +68,12 @@ export default function Notifications() {
         {/* Header */}
         <div className="nf-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <div>
-            <h2 className="nf-title" style={{ fontSize: '24px', fontWeight: 'bold' }}>Notifications</h2>
-            <p className="nf-sub" style={{ color: '#6b7280' }}>Updates and alerts about your appointments</p>
+            <h2 className="nf-title" style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--text-dark)' }}>Notifications</h2>
+            <p className="nf-sub" style={{ color: 'var(--text-muted)' }}>Updates and alerts about your appointments</p>
           </div>
           <div className="nf-header-actions">
             {unreadCount > 0 && (
-              <button onClick={markAll} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'none', border: '1px solid #e5e7eb', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', color: '#374151' }}>
+              <button onClick={markAll} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'none', border: '1px solid var(--border-color)', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', color: 'var(--text-main)' }}>
                 <CheckCircle2 size={16} /> Mark all as read
               </button>
             )}

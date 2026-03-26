@@ -93,10 +93,10 @@ function VisitHistory() {
             {/* Stats */}
             <div className="vh-stats-row">
               {[
-                { label: "Total Visits", value: visits.length, color: "#3b82f6" },
-                { label: "Doctors Seen", value: new Set(visits.map(v => v.doctor_name)).size, color: "#10b981" },
-                { label: "Medications", value: visits.reduce((s, v) => s + v.medicines.length, 0), color: "#8b5cf6" },
-                { label: "Diagnosis Types", value: new Set(visits.map(v => v.diagnosis)).size, color: "#f59e0b" },
+                { label: "Total Visits", value: visits.length, color: "var(--patient-neon)" },
+                { label: "Doctors Seen", value: new Set(visits.map(v => v.doctor_name)).size, color: "var(--doctor-neon)" },
+                { label: "Medications", value: visits.reduce((s, v) => s + v.medicines.length, 0), color: "var(--neon-purple)" },
+                { label: "Diagnosis Types", value: new Set(visits.map(v => v.diagnosis)).size, color: "var(--neon-amber)" },
               ].map(({ label, value, color }) => (
                 <div className="vh-stat" key={label}>
                   <span className="vh-stat-val" style={{ color }}>{value}</span>
@@ -189,7 +189,7 @@ function VisitHistory() {
                       </div>
                       <button 
                         className="vh-download-btn"
-                        onClick={() => handleDownload(visit._id, visit.type)}
+                        onClick={() => handleDownload(visit._id)}
                       >
                         <Download size={14} /> View Digital Prescription
                       </button>

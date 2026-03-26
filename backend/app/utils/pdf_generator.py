@@ -37,13 +37,27 @@ def generate_standalone_prescription_pdf(presc_id: str, presc_data: dict):
     
     story.append(Paragraph("<b>Medication Details:</b>", styles["Heading3"]))
     story.append(Spacer(1, 5))
-    story.append(Paragraph(f"Medicine: {presc_data.get('medicine', '')} {presc_data.get('strength', '')}", styles["Normal"]))
-    story.append(Paragraph(f"Dosage: {presc_data.get('dosage', '')} ({presc_data.get('frequency', '')})", styles["Normal"]))
-    story.append(Paragraph(f"Duration: {presc_data.get('duration', '')}", styles["Normal"]))
     
-    if presc_data.get('instructions'):
-        story.append(Spacer(1, 10))
-        story.append(Paragraph(f"<b>Instructions:</b> {presc_data['instructions']}", styles["Normal"]))
+    # Check for new multi-medicine format
+    medicines = presc_data.get('medicines', [])
+    if medicines:
+        for i, med in enumerate(medicines, 1):
+            med_text = f"{i}. <b>{med.get('medicine', '')}</b> {med.get('strength', '')} "
+            med_text += f"<br/>&nbsp;&nbsp;&nbsp;Dosage: {med.get('dosage', '')} ({med.get('frequency', 'Daily')})"
+            med_text += f"<br/>&nbsp;&nbsp;&nbsp;Duration: {med.get('duration', '')}"
+            if med.get('instructions'):
+                med_text += f"<br/>&nbsp;&nbsp;&nbsp;Note: {med['instructions']}"
+            
+            story.append(Paragraph(med_text, styles["Normal"]))
+            story.append(Spacer(1, 8))
+    else:
+        # Fallback for old single-medicine format
+        story.append(Paragraph(f"Medicine: {presc_data.get('medicine', '')} {presc_data.get('strength', '')}", styles["Normal"]))
+        story.append(Paragraph(f"Dosage: {presc_data.get('dosage', '')} ({presc_data.get('frequency', '')})", styles["Normal"]))
+        story.append(Paragraph(f"Duration: {presc_data.get('duration', '')}", styles["Normal"]))
+        if presc_data.get('instructions'):
+            story.append(Spacer(1, 10))
+            story.append(Paragraph(f"<b>Instructions:</b> {presc_data['instructions']}", styles["Normal"]))
 
     pdf = SimpleDocTemplate(file_path)
     pdf.build(story)

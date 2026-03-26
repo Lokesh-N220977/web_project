@@ -71,6 +71,11 @@ export const appointmentService = {
     return data;
   },
 
+  async getRelatedDoctors(doctorId: string, date: string) {
+    const { data } = await api.get(`/related-doctors/${doctorId}`, { params: { date } });
+    return data;
+  },
+
   async bookHardenedAppointment(bookingData: { 
     doctor_id: string; 
     patient_id: string; 

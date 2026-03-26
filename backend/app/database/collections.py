@@ -18,4 +18,8 @@ doctor_settings_collection = db["doctor_settings"]
 admin_settings_collection = db["admin_settings"]
 hospital_settings_collection = db["hospital_settings"]
 hospitals_collection = db["hospitals"]
+locations_collection = db["locations"]
+doctor_locations_collection = db["doctor_locations"]
+doctor_shifts_collection = db["doctor_shifts"]  # Re-enabled for hardened system
+doctor_slots_collection = db["doctor_slots"]    # Re-enabled for hardened system
 
